@@ -11,6 +11,9 @@
     import { toggleMode } from "mode-watcher";
     import { Button } from "$lib/components/ui/button/index.js";
     import * as ButtonGroup from "$lib/components/ui/button-group/index.js";
+    import * as Card from "$lib/components/ui/card/index.js";
+    
+    import * as ExhaustionEffect from "$lib/data/exhaustion_effect.json";
 
     let maxHealth = $state(15);
     let currentHealth = $state(15);
@@ -26,6 +29,9 @@
 
     let exhaustion = $state(0);
     let light = $state(0);
+    
+    let exhaustionEffectActive = $state(false);
+    let exhaustionEffectText = $state("");
 
     function changeHealth(amount: number) {
         currentHealth = Math.min(
@@ -57,6 +63,16 @@
 
     function changeExhaustion(amount: number) {
         exhaustion = Math.max(0, exhaustion + amount);
+        
+        for(var e of ExhaustionEffect.effects) {
+            if(e.lowThreshold <= exhaustion && e.highThreshold >= exhaustion) {
+                exhaustionEffectActive = true;
+                exhaustionEffectText = e.effect;
+                return;
+            }
+        }
+        
+        exhaustionEffectActive = false;
     }
 
     function changeLight(amount: number) {
@@ -91,22 +107,22 @@
     </Button>
 </Menubar.Root>
 
-<div class="flex flex-col items-center px-2 py-6">
+<div class="flex flex-col items-center mx-2 my-4">
     <!-- health bar -->
-    <div class="flex flex-row items-center w-full py-4">
-        <ButtonGroup.Root class="shrink px-1">
+    <div class="flex flex-row items-center w-full my-2 h-12">
+        <ButtonGroup.Root class="shrink px-1 h-full">
             <Button
                 variant="secondary"
                 onclick={() => changeHealth(-10)}
-                class="h-16 w-12">-10</Button
+                class="h-full w-12">-10</Button
             >
             <Button
                 variant="secondary"
                 onclick={() => changeHealth(-1)}
-                class="h-16 w-12">-1</Button
+                class="h-full w-12">-1</Button
             >
         </ButtonGroup.Root>
-        <div class="grow h-16 relative px-1">
+        <div class="grow relative px-1 h-full">
             <Progress
                 value={currentHealth}
                 max={maxHealth}
@@ -118,35 +134,35 @@
                 Health:{currentHealth}/{maxHealth}
             </Text>
         </div>
-        <ButtonGroup.Root class="shrink px-1">
+        <ButtonGroup.Root class="shrink px-1 h-full">
             <Button
                 variant="secondary"
                 onclick={() => changeHealth(1)}
-                class="h-16 w-12">+1</Button
+                class="h-full  w-12">+1</Button
             >
             <Button
                 variant="secondary"
                 onclick={() => changeHealth(10)}
-                class="h-16 w-12">+10</Button
+                class="h-full w-12">+10</Button
             >
         </ButtonGroup.Root>
     </div>
 
     <!-- toughness bar -->
-    <div class="flex flex-row items-center w-full py-4">
-        <ButtonGroup.Root class="shrink px-1">
+    <div class="flex flex-row items-center w-full my-2 h-12">
+        <ButtonGroup.Root class="shrink px-1 h-full">
             <Button
                 variant="secondary"
                 onclick={() => changeToughness(-10)}
-                class="h-16 w-12">-10</Button
+                class="h-full w-12">-10</Button
             >
             <Button
                 variant="secondary"
                 onclick={() => changeToughness(-1)}
-                class="h-16 w-12">-1</Button
+                class="h-full w-12">-1</Button
             >
         </ButtonGroup.Root>
-        <div class="grow h-16 relative px-1">
+        <div class="grow h-full relative px-1">
             <Progress
                 value={currentToughness}
                 max={maxToughness}
@@ -158,35 +174,35 @@
                 Toughness:{currentToughness}/{maxToughness}
             </Text>
         </div>
-        <ButtonGroup.Root class="shrink px-1">
+        <ButtonGroup.Root class="shrink px-1 h-full">
             <Button
                 variant="secondary"
                 onclick={() => changeToughness(1)}
-                class="h-16 w-12">+1</Button
+                class="h-full w-12">+1</Button
             >
             <Button
                 variant="secondary"
                 onclick={() => changeToughness(10)}
-                class="h-16 w-12">+10</Button
+                class="h-full w-12">+10</Button
             >
         </ButtonGroup.Root>
     </div>
 
     <!-- aether bar -->
-    <div class="flex flex-row items-center w-full py-4">
-        <ButtonGroup.Root class="shrink px-1">
+    <div class="flex flex-row items-center w-full my-2 h-12">
+        <ButtonGroup.Root class="shrink px-1 h-full">
             <Button
                 variant="secondary"
                 onclick={() => changeAether(-10)}
-                class="h-16 w-12">-10</Button
+                class="h-full w-12">-10</Button
             >
             <Button
                 variant="secondary"
                 onclick={() => changeAether(-1)}
-                class="h-16 w-12">-1</Button
+                class="h-full w-12">-1</Button
             >
         </ButtonGroup.Root>
-        <div class="grow h-16 relative px-1">
+        <div class="grow h-16 relative px-1 h-full">
             <Progress
                 value={currentAether}
                 max={maxAether}
@@ -198,35 +214,35 @@
                 Aether:{currentAether}/{maxAether}
             </Text>
         </div>
-        <ButtonGroup.Root class="shrink px-1">
+        <ButtonGroup.Root class="shrink px-1 h-full">
             <Button
                 variant="secondary"
                 onclick={() => changeAether(1)}
-                class="h-16 w-12">+1</Button
+                class="h-full w-12">+1</Button
             >
             <Button
                 variant="secondary"
                 onclick={() => changeAether(10)}
-                class="h-16 w-12">+10</Button
+                class="h-full w-12">+10</Button
             >
         </ButtonGroup.Root>
     </div>
 
     <!-- sanity bar -->
-    <div class="flex flex-row items-center w-full py-4">
-        <ButtonGroup.Root class="shrink px-1">
+    <div class="flex flex-row items-center w-full my-2 h-12">
+        <ButtonGroup.Root class="shrink px-1 h-full">
             <Button
                 variant="secondary"
                 onclick={() => changeSanity(-10)}
-                class="h-16 w-12">-10</Button
+                class="h-full w-12">-10</Button
             >
             <Button
                 variant="secondary"
                 onclick={() => changeSanity(-1)}
-                class="h-16 w-12">-1</Button
+                class="h-full w-12">-1</Button
             >
         </ButtonGroup.Root>
-        <div class="grow h-16 relative px-1">
+        <div class="grow h-full relative px-1">
             <Progress
                 value={currentSanity}
                 max={maxSanity}
@@ -238,45 +254,79 @@
                 Sanity:{currentSanity}/{maxSanity}
             </Text>
         </div>
-        <ButtonGroup.Root class="shrink px-1">
+        <ButtonGroup.Root class="shrink px-1 h-full">
             <Button
                 variant="secondary"
                 onclick={() => changeSanity(1)}
-                class="h-16 w-12">+1</Button
+                class="h-full w-12">+1</Button
             >
             <Button
                 variant="secondary"
                 onclick={() => changeSanity(10)}
-                class="h-16 w-12">+10</Button
+                class="h-full w-12">+10</Button
             >
         </ButtonGroup.Root>
     </div>
 
-    <div class="flex flex-row items-center">
-        <div class="flex flex-row items-center mx-2">
-            <Button size="icon" onclick={() => changeExhaustion(-1)}>
-                <ChevronLeftIcon />
-            </Button>
-            <div class="mx-4">
-                <Text>Exhaustion</Text>
-                <Text class="text-center" as="h4">{exhaustion}</Text>
+    <div class="grid grid-cols-2 gap-2 h-50">
+        <div class="flex flex-col items-start w-full grow">
+            <div class="flex flex-row items-center w-full">
+                <Button size="icon" onclick={() => changeExhaustion(-1)}>
+                    <ChevronLeftIcon />
+                </Button>
+                <div class="mx-4">
+                    <Text class="text-center">Exhaustion</Text>
+                    <Text class="text-center" as="h4">{exhaustion}</Text>
+                </div>
+                <Button size="icon" onclick={() => changeExhaustion(1)}>
+                    <ChevronRightIcon />
+                </Button>
             </div>
-            <Button size="icon" onclick={() => changeExhaustion(1)}>
-                <ChevronRightIcon />
-            </Button>
+            {#if exhaustionEffectActive}
+            <Card.Root class="w-full mt-2">
+                <Card.Content>
+                    <p>{exhaustionEffectText}</p>
+                </Card.Content>
+            </Card.Root>
+            {/if}
         </div>
 
-        <div class="flex flex-row items-center mx-2">
-            <Button size="icon" onclick={() => changeLight(-1)}>
-                <ChevronLeftIcon />
-            </Button>
-            <div class="mx-4">
-                <Text>Light</Text>
-                <Text class="text-center" as="h4">{light}</Text>
+        <div class="flex flex-col items-start w-full">
+            <div class="flex flex-row items-center w-full">
+                <Button size="icon" onclick={() => changeLight(-1)}>
+                    <ChevronLeftIcon />
+                </Button>
+                <div class="grow">
+                    <Text class="text-center">Light</Text>
+                    <Text class="text-center" as="h4">{light}</Text>
+                </div>
+                <Button size="icon" onclick={() => changeLight(1)}>
+                    <ChevronRightIcon />
+                </Button>
             </div>
-            <Button size="icon" onclick={() => changeLight(1)}>
-                <ChevronRightIcon />
-            </Button>
+            
+             <ButtonGroup.Root class="h-10 w-full">
+                <Button
+                    variant="secondary"
+                    onclick={() => changeLight(10)}
+                    class="h-full w-1/2">+10</Button
+                >
+                <Button
+                    variant="secondary"
+                    onclick={() => changeLight(20)}
+                    class="h-full w-1/2">+20</Button
+                >
+            </ButtonGroup.Root>
+            
+            {#if light == 0}
+            <Card.Root class="grow mt-2 mx-1">
+                <Card.Content>
+                    <p><b>Blinded</b>: Disadvantage non-Reason check, only basic attack, no targeting</p>
+                    <br/>
+                    <p><b>-1 sanity</b>/room</p>
+                </Card.Content>
+            </Card.Root>
+            {/if}
         </div>
     </div>
 </div>

@@ -1,0 +1,19 @@
+{
+    "effects" : [
+        {
+            "lowThreshold" : 11,
+            "highThreshold" : 15,
+            "effect": "You heal half of the amount of Wounds from all sources."
+        },
+        {
+            "lowThreshold": 16,
+            "highThreshold": 20,
+            "effect": "You have Disadvantage on all checks."
+        },
+        {
+            "lowThreshold": 21,
+            "highThreshold": 999999,
+            "effect": "You die, your body no longer capable of enduring the accumulated stress and fatigue."
+        }
+    ]
+}
