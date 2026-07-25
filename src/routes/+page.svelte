@@ -111,13 +111,13 @@
 
 <div class="flex flex-col items-center mx-2 my-4">
     <!-- health bar -->
-    <InfoGauge label="Health" currentValue={currentHealth} maxValue={maxHealth} onchangefunc={changeHealth} barcolor="bg-red-500"/>
+    <InfoGauge label="Health" currentValue={currentHealth} maxValue={maxHealth} onchangefunc={changeHealth} classAddition="**:data-[slot=progress-indicator]:bg-red-500"/>
     <!-- toughness bar -->
-    <InfoGauge label="Toughness" currentValue={currentToughness} maxValue={maxToughness} onchangefunc={changeToughness} barcolor="bg-green-700"/>
+    <InfoGauge label="Toughness" currentValue={currentToughness} maxValue={maxToughness} onchangefunc={changeToughness} classAddition="**:data-[slot=progress-indicator]:bg-green-700"/>
     <!-- aether bar -->
-    <InfoGauge label="Aether" currentValue={currentAether} maxValue={maxToughness} onchangefunc={changeAether} barcolor="bg-blue-500"/>
+    <InfoGauge label="Aether" currentValue={currentAether} maxValue={maxToughness} onchangefunc={changeAether} classAddition="**:data-[slot=progress-indicator]:bg-blue-500"/>
     <!-- sanity bar -->
-    <InfoGauge label="Sanity" currentValue={currentSanity} maxValue={maxSanity} onchangefunc={changeAether} barcolor="bg-purple-400"/>
+    <InfoGauge label="Sanity" currentValue={currentSanity} maxValue={maxSanity} onchangefunc={changeSanity} classAddition="**:data-[slot=progress-indicator]:bg-purple-400"/>
 
     <div class="grid grid-cols-2 gap-2 h-50">
         <div class="flex flex-col items-start w-full grow">

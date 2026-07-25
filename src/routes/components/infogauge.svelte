@@ -11,7 +11,7 @@
         currentValue,
         maxValue,
         onchangefunc,
-        barcolor,
+        classAddition,
      } = $props();
 </script>
 
@@ -33,7 +33,7 @@
         <Progress
             value={currentValue}
             max={maxValue}
-            class="grow h-full **:data-[slot=progress-indicator]:{barcolor}"
+            class={["grow h-full", classAddition]}
         />
         <Text
             class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10"
