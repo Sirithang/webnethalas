@@ -1,43 +1,16 @@
-# sv
+Web Nethalas
+============
 
-Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
+A simple tool to help play [Ker Nethalas: Into The Midnight Throne](https://kernethalas.com/)
 
-## Creating a project
+This is not a virtual play tool that will handle the character sheet, roll dice and more.
+This fix common problems I had playing the game:
 
-If you're seeing this, you've probably already done this step. Congrats!
-
-```sh
-# create a new project
-npx sv create my-app
-```
-
-To recreate this project with the same configuration:
-
-```sh
-# recreate this project
-npx sv@0.16.4 create --template minimal --types ts --add tailwindcss="plugins:typography,forms" --install npm webnethalas
-```
-
-## Developing
-
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
-
-```sh
-npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
-
-## Building
-
-To create a production version of your app:
-
-```sh
-npm run build
-```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
-# webnethalas
+-*Dynamic value tracker*: thing like health, thoughness etc. keep changing leading to writing/erasing
+often on the character sheet. The tool will help track those so you only need to write the last value
+on the sheet when you "save" before stoping playing
+-*Combat Reference*: Will help through the flow of combat, reminding which test to do when, and offer
+pop up reference of rules like conditions, fumble/defense action table etc. Avoid having to constantly
+flip back and forth the enemy statblock and all the tables
+-*Exploration Reference*: Help reminding the order of test when exploring (door check, lock check, trap check etc.)
+and have quick reference to the relevant tables (traps, fumble etc.)
