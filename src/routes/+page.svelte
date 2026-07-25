@@ -13,6 +13,8 @@
     import * as ButtonGroup from "$lib/components/ui/button-group/index.js";
     import * as Card from "$lib/components/ui/card/index.js";
     
+    import InfoGauge from "./components/infogauge.svelte";
+    
     import * as ExhaustionEffect from "$lib/data/exhaustion_effect.json";
 
     let maxHealth = $state(15);
@@ -109,164 +111,13 @@
 
 <div class="flex flex-col items-center mx-2 my-4">
     <!-- health bar -->
-    <div class="flex flex-row items-center w-full my-2 h-12">
-        <ButtonGroup.Root class="shrink px-1 h-full">
-            <Button
-                variant="secondary"
-                onclick={() => changeHealth(-10)}
-                class="h-full w-12">-10</Button
-            >
-            <Button
-                variant="secondary"
-                onclick={() => changeHealth(-1)}
-                class="h-full w-12">-1</Button
-            >
-        </ButtonGroup.Root>
-        <div class="grow relative px-1 h-full">
-            <Progress
-                value={currentHealth}
-                max={maxHealth}
-                class="grow h-full **:data-[slot=progress-indicator]:bg-red-500"
-            />
-            <Text
-                class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10"
-            >
-                Health:{currentHealth}/{maxHealth}
-            </Text>
-        </div>
-        <ButtonGroup.Root class="shrink px-1 h-full">
-            <Button
-                variant="secondary"
-                onclick={() => changeHealth(1)}
-                class="h-full  w-12">+1</Button
-            >
-            <Button
-                variant="secondary"
-                onclick={() => changeHealth(10)}
-                class="h-full w-12">+10</Button
-            >
-        </ButtonGroup.Root>
-    </div>
-
+    <InfoGauge label="Health" currentValue={currentHealth} maxValue={maxHealth} onchangefunc={changeHealth} barcolor="bg-red-500"/>
     <!-- toughness bar -->
-    <div class="flex flex-row items-center w-full my-2 h-12">
-        <ButtonGroup.Root class="shrink px-1 h-full">
-            <Button
-                variant="secondary"
-                onclick={() => changeToughness(-10)}
-                class="h-full w-12">-10</Button
-            >
-            <Button
-                variant="secondary"
-                onclick={() => changeToughness(-1)}
-                class="h-full w-12">-1</Button
-            >
-        </ButtonGroup.Root>
-        <div class="grow h-full relative px-1">
-            <Progress
-                value={currentToughness}
-                max={maxToughness}
-                class="grow h-full **:data-[slot=progress-indicator]:bg-green-700"
-            />
-            <Text
-                class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10"
-            >
-                Toughness:{currentToughness}/{maxToughness}
-            </Text>
-        </div>
-        <ButtonGroup.Root class="shrink px-1 h-full">
-            <Button
-                variant="secondary"
-                onclick={() => changeToughness(1)}
-                class="h-full w-12">+1</Button
-            >
-            <Button
-                variant="secondary"
-                onclick={() => changeToughness(10)}
-                class="h-full w-12">+10</Button
-            >
-        </ButtonGroup.Root>
-    </div>
-
+    <InfoGauge label="Toughness" currentValue={currentToughness} maxValue={maxToughness} onchangefunc={changeToughness} barcolor="bg-green-700"/>
     <!-- aether bar -->
-    <div class="flex flex-row items-center w-full my-2 h-12">
-        <ButtonGroup.Root class="shrink px-1 h-full">
-            <Button
-                variant="secondary"
-                onclick={() => changeAether(-10)}
-                class="h-full w-12">-10</Button
-            >
-            <Button
-                variant="secondary"
-                onclick={() => changeAether(-1)}
-                class="h-full w-12">-1</Button
-            >
-        </ButtonGroup.Root>
-        <div class="grow h-16 relative px-1 h-full">
-            <Progress
-                value={currentAether}
-                max={maxAether}
-                class="grow h-full **:data-[slot=progress-indicator]:bg-blue-500"
-            />
-            <Text
-                class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10"
-            >
-                Aether:{currentAether}/{maxAether}
-            </Text>
-        </div>
-        <ButtonGroup.Root class="shrink px-1 h-full">
-            <Button
-                variant="secondary"
-                onclick={() => changeAether(1)}
-                class="h-full w-12">+1</Button
-            >
-            <Button
-                variant="secondary"
-                onclick={() => changeAether(10)}
-                class="h-full w-12">+10</Button
-            >
-        </ButtonGroup.Root>
-    </div>
-
+    <InfoGauge label="Aether" currentValue={currentAether} maxValue={maxToughness} onchangefunc={changeAether} barcolor="bg-blue-500"/>
     <!-- sanity bar -->
-    <div class="flex flex-row items-center w-full my-2 h-12">
-        <ButtonGroup.Root class="shrink px-1 h-full">
-            <Button
-                variant="secondary"
-                onclick={() => changeSanity(-10)}
-                class="h-full w-12">-10</Button
-            >
-            <Button
-                variant="secondary"
-                onclick={() => changeSanity(-1)}
-                class="h-full w-12">-1</Button
-            >
-        </ButtonGroup.Root>
-        <div class="grow h-full relative px-1">
-            <Progress
-                value={currentSanity}
-                max={maxSanity}
-                class="grow h-full **:data-[slot=progress-indicator]:bg-purple-400"
-            />
-            <Text
-                class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10"
-            >
-                Sanity:{currentSanity}/{maxSanity}
-            </Text>
-        </div>
-        <ButtonGroup.Root class="shrink px-1 h-full">
-            <Button
-                variant="secondary"
-                onclick={() => changeSanity(1)}
-                class="h-full w-12">+1</Button
-            >
-            <Button
-                variant="secondary"
-                onclick={() => changeSanity(10)}
-                class="h-full w-12">+10</Button
-            >
-        </ButtonGroup.Root>
-    </div>
+    <InfoGauge label="Sanity" currentValue={currentSanity} maxValue={maxSanity} onchangefunc={changeAether} barcolor="bg-purple-400"/>
 
     <div class="grid grid-cols-2 gap-2 h-50">
         <div class="flex flex-col items-start w-full grow">
