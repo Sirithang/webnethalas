@@ -9,13 +9,17 @@
     import ChevronLeftIcon from "@lucide/svelte/icons/chevron-left";
 
     import { toggleMode } from "mode-watcher";
-    import { Button } from "$lib/components/ui/button/index.js";
+    import { Button, buttonVariants  } from "$lib/components/ui/button/index.js";
     import * as ButtonGroup from "$lib/components/ui/button-group/index.js";
     import * as Card from "$lib/components/ui/card/index.js";
     
+    import * as Drawer from "$lib/components/ui/drawer/index.js";
+    
     import InfoGauge from "./components/infogauge.svelte";
+    import ConbatTool from "./components/combattool.svelte";
     
     import * as ExhaustionEffect from "$lib/data/exhaustion_effect.json";
+    import CombatTool from "./components/combattool.svelte";
 
     let maxHealth = $state(15);
     let currentHealth = $state(15);
@@ -180,4 +184,11 @@
             {/if}
         </div>
     </div>
+    
+    <Drawer.Root modal={false}>
+        <Drawer.Trigger class={[buttonVariants({ variant: "outline" }), "fixed bottom-0"]}>New Combat</Drawer.Trigger>
+        <Drawer.Content>
+            <CombatTool></CombatTool>
+        </Drawer.Content>
+    </Drawer.Root>
 </div>
