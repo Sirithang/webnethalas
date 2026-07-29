@@ -1,8 +1,10 @@
 <script lang="ts" module>
-    import { Button } from "$lib/components/ui/button/index.js";
+    import { Button, buttonVariants } from "$lib/components/ui/button/index.js";
     import * as ButtonGroup from "$lib/components/ui/button-group/index.js";
     import { Progress } from "$lib/components/ui/progress/index.js";
     import { Text } from "$lib/components/ui/text/index.js";
+    import * as Dialog from "$lib/components/ui/dialog/index.js";
+    import Input from "$lib/components/ui/input/input.svelte";
 </script>
 
 <script lang="ts">
@@ -11,8 +13,11 @@
         currentValue,
         maxValue,
         onchangefunc,
+        onmaxchangedfunc,
         classAddition,
      } = $props();
+     
+     let editDialogOpen = $state(false)
 </script>
 
 
@@ -29,7 +34,8 @@
             class="h-full w-12">-1</Button
         >
     </ButtonGroup.Root>
-    <div class="grow relative px-1 h-full">
+    <!-- svelte-ignore a11y_click_events_have_key_events -->
+    <div class="grow relative px-1 h-full" role="button" tabindex=0 onclick={() => {editDialogOpen = true;}}>
         <Progress
             value={currentValue}
             max={maxValue}
@@ -54,3 +60,20 @@
         >
     </ButtonGroup.Root>
 </div>
+
+<Dialog.Root bind:open={editDialogOpen}>
+        <Dialog.Content  class="sm:max-w-[425px]">
+            <Dialog.Description>
+                <Text>Edit max {label}</Text>
+                <Input bind:value={maxValue} type="number" onchange={() => {onmaxchangedfunc(maxValue); editDialogOpen = false}}/>
+            </Dialog.Description>
+            <Dialog.Footer class="flex flex-row">
+                <Dialog.Close
+                type="button"
+                class={buttonVariants({ variant: "outline" })}
+                >
+                Cancel
+                </Dialog.Close>
+            </Dialog.Footer>
+        </Dialog.Content>
+</Dialog.Root>

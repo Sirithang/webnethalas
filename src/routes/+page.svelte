@@ -114,14 +114,41 @@
 </Menubar.Root>
 
 <div class="flex flex-col items-center mx-2 my-4">
-    <!-- health bar -->
-    <InfoGauge label="Health" currentValue={currentHealth} maxValue={maxHealth} onchangefunc={changeHealth} classAddition="**:data-[slot=progress-indicator]:bg-red-500"/>
-    <!-- toughness bar -->
-    <InfoGauge label="Toughness" currentValue={currentToughness} maxValue={maxToughness} onchangefunc={changeToughness} classAddition="**:data-[slot=progress-indicator]:bg-green-700"/>
-    <!-- aether bar -->
-    <InfoGauge label="Aether" currentValue={currentAether} maxValue={maxToughness} onchangefunc={changeAether} classAddition="**:data-[slot=progress-indicator]:bg-blue-500"/>
-    <!-- sanity bar -->
-    <InfoGauge label="Sanity" currentValue={currentSanity} maxValue={maxSanity} onchangefunc={changeSanity} classAddition="**:data-[slot=progress-indicator]:bg-purple-400"/>
+
+    <div class="w-full">
+        <!-- health bar -->
+        <InfoGauge 
+            label="Health" 
+            currentValue={currentHealth} 
+            maxValue={maxHealth} 
+            onchangefunc={changeHealth} 
+            onmaxchangedfunc={(newVal) => {maxHealth = newVal; if(maxHealth < currentHealth) {currentHealth = maxHealth}}}
+            classAddition="**:data-[slot=progress-indicator]:bg-red-500"/>
+        <!-- toughness bar -->
+        <InfoGauge 
+            label="Toughness" 
+            currentValue={currentToughness} 
+            maxValue={maxToughness} 
+            onchangefunc={changeToughness}
+            onmaxchangedfunc={(newVal) => {maxToughness = newVal; if(maxToughness < currentToughness) {currentToughness = maxToughness}}}
+            classAddition="**:data-[slot=progress-indicator]:bg-green-700"/>
+        <!-- aether bar -->
+        <InfoGauge 
+            label="Aether" 
+            currentValue={currentAether} 
+            maxValue={maxAether} 
+            onchangefunc={changeAether} 
+            onmaxchangedfunc={(newVal) => {maxAether = newVal; if(maxAether < currentAether) {currentAether = maxAether}}}
+            classAddition="**:data-[slot=progress-indicator]:bg-blue-500"/>
+        <!-- sanity bar -->
+        <InfoGauge 
+            label="Sanity" 
+            currentValue={currentSanity} 
+            maxValue={maxSanity} 
+            onchangefunc={changeSanity}
+            onmaxchangedfunc={(newVal) => {maxSanity = newVal; if(maxSanity < currentSanity) {currentSanity = maxSanity}}} 
+            classAddition="**:data-[slot=progress-indicator]:bg-purple-400"/>
+    </div>
 
     <div class="grid grid-cols-2 gap-2 h-50">
         <div class="flex flex-col items-start w-full grow">
