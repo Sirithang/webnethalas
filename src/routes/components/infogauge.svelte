@@ -15,13 +15,14 @@
         onchangefunc,
         onmaxchangedfunc,
         classAddition,
+        height = 12,
      } = $props();
      
      let editDialogOpen = $state(false)
 </script>
 
 
-<div class="flex flex-row items-center w-full my-2 h-12">
+<div class={["flex flex-row items-center w-full my-2", "h-"+height]}>
     <ButtonGroup.Root class="shrink px-1 h-full">
         <Button
             variant="secondary"

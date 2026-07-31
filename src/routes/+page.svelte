@@ -16,10 +16,10 @@
     import * as Drawer from "$lib/components/ui/drawer/index.js";
     
     import InfoGauge from "./components/infogauge.svelte";
-    import ConbatTool from "./components/combattool.svelte";
     
     import * as ExhaustionEffect from "$lib/data/exhaustion_effect.json";
     import CombatTool from "./components/combattool.svelte";
+    import DefenseTable from "./components/defensetable.svelte";
 
     let maxHealth = $state(15);
     let currentHealth = $state(15);
@@ -119,6 +119,7 @@
         <!-- health bar -->
         <InfoGauge 
             label="Health" 
+            height=10
             currentValue={currentHealth} 
             maxValue={maxHealth} 
             onchangefunc={changeHealth} 
@@ -126,7 +127,8 @@
             classAddition="**:data-[slot=progress-indicator]:bg-red-500"/>
         <!-- toughness bar -->
         <InfoGauge 
-            label="Toughness" 
+            label="Toughness"
+            height=10
             currentValue={currentToughness} 
             maxValue={maxToughness} 
             onchangefunc={changeToughness}
@@ -135,6 +137,7 @@
         <!-- aether bar -->
         <InfoGauge 
             label="Aether" 
+            height=10
             currentValue={currentAether} 
             maxValue={maxAether} 
             onchangefunc={changeAether} 
@@ -143,6 +146,7 @@
         <!-- sanity bar -->
         <InfoGauge 
             label="Sanity" 
+            height=10
             currentValue={currentSanity} 
             maxValue={maxSanity} 
             onchangefunc={changeSanity}
@@ -218,4 +222,6 @@
             <CombatTool></CombatTool>
         </Drawer.Content>
     </Drawer.Root>
+    
+    <DefenseTable/>
 </div>

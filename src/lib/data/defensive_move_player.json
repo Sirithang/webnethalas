@@ -1,0 +1,14 @@
+{
+    "moves" : [
+        "Your next attack receives an additional +10 to the combat check",
+        "Reduce your opponent's Armor by -1 in a random Hit Location until the end of combat.",
+        "Your opponent receives the Bleeding (1) condition",
+        "You are Immune to all conditions until your next turn, including the ones you are currently suffering from",
+        "Your opponent immediately suffers 1 Piercing damage that ignores Armor",
+        "Add +D6 to your Damage Pool for your next attack",
+        "You gain Advantage on your next attack",
+        "You press your advantage, reducing your opponent's next defensive check by -20",
+        "You get a moment of respite after fending off your opponent's attack. Recover 2 Toughness",
+        "Your next attack doesn't suffer the usual Disadvantage to your attack Skill when targeting a specific body part"
+    ]
+}
