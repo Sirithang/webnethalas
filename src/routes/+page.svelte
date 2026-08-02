@@ -22,6 +22,8 @@
     import DefenseTable from "./components/defensetable.svelte";
     import DamagePhase from "./components/damagephase.svelte";
     import HitLocationTables from "./components/hitlocationtables.svelte";
+    import CritsTable from "./components/critstable.svelte";
+    import { popupStates } from "./state.svelte";
     
 
     let maxHealth = $state(15);
@@ -102,6 +104,12 @@
             <Menubar.Item>Share</Menubar.Item>
             <Menubar.Separator />
             <Menubar.Item>Print</Menubar.Item>
+        </Menubar.Content>
+        <Menubar.Trigger>References</Menubar.Trigger>
+        <Menubar.Content>
+        <Menubar.Item onclick={() => {popupStates.isCritsPopupShown = true}}>Crits Effects</Menubar.Item>
+            <Menubar.Item onclick={() => {popupStates.isDefensivePopupShown = true}}>Defense Tables</Menubar.Item>
+            <Menubar.Item onclick={() => {popupStates.isHitLocationPopupShown = true}}>Hit Location Tables</Menubar.Item>
         </Menubar.Content>
     </Menubar.Menu>
     <div class="grow"></div>
@@ -229,4 +237,5 @@
     <DefenseTable/>
     <DamagePhase/>
     <HitLocationTables/>
+    <CritsTable/>
 </div>

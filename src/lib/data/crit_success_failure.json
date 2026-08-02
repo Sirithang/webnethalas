@@ -1,0 +1,69 @@
+{
+    "entries": [
+        {
+            "skill" : "Acrobatics",
+            "success" : "+30 bonus to Next Action. This bonus lasts for one round",
+            "failure" : "D6 Bludgeoning damage. Prone."
+        },
+        {
+            "skill": "Athletics",
+            "success": "Next Succesful attack is a Critical Strike\n-Or-\nNext Door/Container smash open automatically",
+            "failure": "Gain D4 Exhaustion"
+        },
+        {
+            "skill": "Dodge",
+            "success": "+20 bonus to Dodge for next round",
+            "failure": "Double damage from the source"
+        },
+        {
+            "skill": "Endurance",
+            "success": "+1 health, Recover D4 Exhaustion",
+            "failure": "Gain D4 Exhaustion"
+        },
+        {
+            "skill": "Initiative",
+            "success": "Next Attack with Advantage",
+            "failure": "Loose your first turn"
+        },
+        {
+            "skill": "Medicine",
+            "success": "Recover D10 Toughness",
+            "failure": "Patient suffer 2D6 Bludgeoning Damage"
+        },
+        {
+            "skill": "Perception",
+            "success": "Advantage on next Perception Check",
+            "failure": "Disadvantage on next Perception Check"
+        },
+        {
+            "skill": "Resolve",
+            "success": "Recover D4+1 Sanity",
+            "failure": "Loose D4 Sanity"
+        },
+        {
+            "skill": "Reason",
+            "success": "Immediatly identify magic itout without using Crystal",
+            "failure": "Increase Lair/Domain Exit Die by 1 Stage"
+        },
+        {
+            "skill": "Scavenging",
+            "success": "+5 to the roll on Scavenging table (optional)",
+            "failure": "Roll on Combat Encounter Tables (p.133)"
+        },
+        {
+            "skill": "Spellward",
+            "success": "Resistant to damage from magic for next D4 rounds",
+            "failure": "Double damage from spell or its effect last twice as long"
+        },
+        {
+            "skill": "Stealth",
+            "success": "Attack in next round strikes automatically",
+            "failure": "Disavantage on any action next turn"
+        },
+        {
+            "skill": "Thievery",
+            "success": "Advantage on Next Thievery Check",
+            "failure": "Trigger a trap (roll on Taps Table p.119)"
+        }
+    ]
+}
