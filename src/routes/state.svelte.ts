@@ -1,3 +1,5 @@
 export let popupStates = $state({
-    isDefensivePopupShown: false
+    isDefensivePopupShown: false,
+    isDamageStepPopupShown: false,
+    isHitLocationPopupShown: false
 });

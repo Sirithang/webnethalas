@@ -5,13 +5,11 @@
     
     import { popupStates } from '../state.svelte.js';
     import * as PlayerDefensiveMove from "$lib/data/defensive_move_player.json";
-    import Text from "$lib/components/ui/text/text.svelte";
+    import * as NPCDefensiveMove from "$lib/data/defensive_move_npc.json";
 
 </script>
 
 <script lang="ts">
-    import { Cell } from "$lib/components/ui/table";
-
 
 </script>
 
@@ -36,7 +34,7 @@
                         <Table.Body class="w-full">
                             {#each PlayerDefensiveMove.moves as m, i}
                             <Table.Row>
-                                <Table.Cell>{i}</Table.Cell>
+                                <Table.Cell>{i+1}</Table.Cell>
                                 <Table.Cell class="text-wrap whitespace-normal">{m}</Table.Cell>
                             </Table.Row>
                             {/each}
@@ -44,7 +42,25 @@
                         </Table.Body>
                     </Table.Root>
                 </Tabs.Content>
-                <Tabs.Content value="npc-monster"></Tabs.Content>
+                <Tabs.Content value="npc-monster">
+                    <Table.Root class="w-full">
+                        <Table.Header class="w-full">
+                            <Table.Row>
+                                <Table.Head class="w-0.1">d10</Table.Head>
+                                <Table.Head class="w-0.1">Result</Table.Head>
+                            </Table.Row>
+                        </Table.Header>
+                        <Table.Body class="w-full">
+                            {#each NPCDefensiveMove.moves as m, i}
+                            <Table.Row>
+                                <Table.Cell>{i+1}</Table.Cell>
+                                <Table.Cell class="text-wrap whitespace-normal">{m}</Table.Cell>
+                            </Table.Row>
+                            {/each}
+                            
+                        </Table.Body>
+                    </Table.Root>
+                </Tabs.Content>
             </Tabs.Root>
     </Dialog.Content>
 </Dialog.Root>

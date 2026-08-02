@@ -1,0 +1,14 @@
+{
+    "moves" : [
+        "The creature's next attack receives an additional +10 to its Combat Skill. If it's a magic action, the PC's Spellward is reduced by -10 until the creature's next turn.",
+        "Reduce the PC's Armor by -1 in a random Hit Location until the end of combat",
+        "The PC receives the Bleeding (1) condition",
+        "The creature clears all negative conditions that it is currently suffering from, if any",
+        "The PC receives 1 Piercing damage that ignores Armor",
+        "The creature's next damaging Action receives +D6 damage to its Damage Pool. If it's not a damaging Action, then the PC's Spellward is reduced by -10 until the creature's next turn",
+        "The creature gains Advantage on its next attack. If the attack is a Magical one, then the PC rolls its Spellward with Disadvantage",
+        "The PC's next Dodge, Parry, or Spellward check is reduced by -20",
+        "The creature recovers D4 Health",
+        "The creature gets a new turn immediately"
+    ]
+}

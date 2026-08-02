@@ -20,6 +20,9 @@
     import * as ExhaustionEffect from "$lib/data/exhaustion_effect.json";
     import CombatTool from "./components/combattool.svelte";
     import DefenseTable from "./components/defensetable.svelte";
+    import DamagePhase from "./components/damagephase.svelte";
+    import HitLocationTables from "./components/hitlocationtables.svelte";
+    
 
     let maxHealth = $state(15);
     let currentHealth = $state(15);
@@ -224,4 +227,6 @@
     </Drawer.Root>
     
     <DefenseTable/>
+    <DamagePhase/>
+    <HitLocationTables/>
 </div>

@@ -97,12 +97,12 @@
                             <Tabs.Trigger value="magic">Magick</Tabs.Trigger>
                         </Tabs.List>
                         <Tabs.Content value="melee">
-                            <Text>Melee → weapon skill vs combat skill.</Text>
-                            <Text>&nbsp;&nbsp;&nbsp;&nbsp;<b>Win</b>: compute damage</Text>
+                            <Text>Melee → weapon skill vs (combat skill - weapon speed).</Text>
+                            <Text>&nbsp;&nbsp;&nbsp;&nbsp;<b>Win</b>: compute <Button variant="link" onclick={() => {popupStates.isDamageStepPopupShown = true}}>Damage</Button></Text>
                             <Text>&nbsp;&nbsp;&nbsp;&nbsp;<b>Loose</b>: Defender roll on <Button variant="link" onclick={()=>{popupStates.isDefensivePopupShown = true;}}>defensive table</Button></Text>
                             <Text>&nbsp;&nbsp;&nbsp;&nbsp;<b>Both</b> Fail: Defender suffer 1 damage</Text>
                         </Tabs.Content>
-                        <Tabs.Content value="magic"><Text>Magic → Spellward or Magic Resistance check</Text></Tabs.Content>
+                            <Tabs.Content value="magic"><Text>Magic → Spellward or Magic Resistance check</Text></Tabs.Content>
                         </Tabs.Root>
                         
                         <Button onclick={() => {currentCombatStage = 2;}}>End Fight</Button>
