@@ -2,6 +2,8 @@
     import * as Menubar from "$lib/components/ui/menubar/index.js";
     import { Progress } from "$lib/components/ui/progress/index.js";
     import { Text } from "$lib/components/ui/text/index.js";
+    import * as ToggleGroup from "$lib/components/ui/toggle-group/index.js";
+    import * as Card from "$lib/components/ui/card/index.js";
 
     import SunIcon from "@lucide/svelte/icons/sun";
     import MoonIcon from "@lucide/svelte/icons/moon";
@@ -9,23 +11,24 @@
     import ChevronLeftIcon from "@lucide/svelte/icons/chevron-left";
 
     import { toggleMode } from "mode-watcher";
-    import { Button, buttonVariants  } from "$lib/components/ui/button/index.js";
+    import { Button, buttonVariants } from "$lib/components/ui/button/index.js";
     import * as ButtonGroup from "$lib/components/ui/button-group/index.js";
-    import * as Card from "$lib/components/ui/card/index.js";
-    
+
     import * as Drawer from "$lib/components/ui/drawer/index.js";
-    
+
     import InfoGauge from "./components/infogauge.svelte";
-    
+
     import * as ExhaustionEffect from "$lib/data/exhaustion_effect.json";
     import CombatTool from "./components/combattool.svelte";
+    import ExplorationRef from "./components/explorationref.svelte";
     import DefenseTable from "./components/defensetable.svelte";
     import DamagePhase from "./components/damagephase.svelte";
     import HitLocationTables from "./components/hitlocationtables.svelte";
     import CritsTable from "./components/critstable.svelte";
     import { popupStates } from "./state.svelte";
-    
 
+  
+  
     let maxHealth = $state(15);
     let currentHealth = $state(15);
 
@@ -40,7 +43,7 @@
 
     let exhaustion = $state(0);
     let light = $state(0);
-    
+
     let exhaustionEffectActive = $state(false);
     let exhaustionEffectText = $state("");
 
@@ -74,15 +77,15 @@
 
     function changeExhaustion(amount: number) {
         exhaustion = Math.max(0, exhaustion + amount);
-        
-        for(var e of ExhaustionEffect.effects) {
-            if(e.lowThreshold <= exhaustion && e.highThreshold >= exhaustion) {
+
+        for (var e of ExhaustionEffect.effects) {
+            if (e.lowThreshold <= exhaustion && e.highThreshold >= exhaustion) {
                 exhaustionEffectActive = true;
                 exhaustionEffectText = e.effect;
                 return;
             }
         }
-        
+
         exhaustionEffectActive = false;
     }
 
@@ -94,25 +97,26 @@
 <Menubar.Root>
     <Menubar.Menu>
         <Menubar.Trigger>File</Menubar.Trigger>
-        <Menubar.Content>
-            <Menubar.Item>
-                New Tab
-                <Menubar.Shortcut>⌘T</Menubar.Shortcut>
-            </Menubar.Item>
-            <Menubar.Item>New Window</Menubar.Item>
-            <Menubar.Separator />
-            <Menubar.Item>Share</Menubar.Item>
-            <Menubar.Separator />
-            <Menubar.Item>Print</Menubar.Item>
-        </Menubar.Content>
+        <Menubar.Content></Menubar.Content>
         <Menubar.Trigger>References</Menubar.Trigger>
         <Menubar.Content>
-        <Menubar.Item onclick={() => {popupStates.isCritsPopupShown = true}}>Crits Effects</Menubar.Item>
-            <Menubar.Item onclick={() => {popupStates.isDefensivePopupShown = true}}>Defense Tables</Menubar.Item>
-            <Menubar.Item onclick={() => {popupStates.isHitLocationPopupShown = true}}>Hit Location Tables</Menubar.Item>
+            <Menubar.Item
+                onclick={() => {
+                    popupStates.isCritsPopupShown = true;
+                }}>Crits Effects</Menubar.Item
+            >
+            <Menubar.Item
+                onclick={() => {
+                    popupStates.isDefensivePopupShown = true;
+                }}>Defense Tables</Menubar.Item
+            >
+            <Menubar.Item
+                onclick={() => {
+                    popupStates.isHitLocationPopupShown = true;
+                }}>Hit Location Tables</Menubar.Item
+            >
         </Menubar.Content>
     </Menubar.Menu>
-    <div class="grow"></div>
     <Button onclick={toggleMode} variant="outline" size="icon">
         <SunIcon
             class="h-[1.2rem] w-[1.2rem] scale-100 rotate-0 !transition-all dark:scale-0 dark:-rotate-90"
@@ -125,44 +129,112 @@
 </Menubar.Root>
 
 <div class="flex flex-col items-center mx-2 my-4">
-
     <div class="w-full">
         <!-- health bar -->
-        <InfoGauge 
-            label="Health" 
-            height=10
-            currentValue={currentHealth} 
-            maxValue={maxHealth} 
-            onchangefunc={changeHealth} 
-            onmaxchangedfunc={(newVal) => {maxHealth = newVal; if(maxHealth < currentHealth) {currentHealth = maxHealth}}}
-            classAddition="**:data-[slot=progress-indicator]:bg-red-500"/>
+        <InfoGauge
+            label="Health"
+            height="10"
+            currentValue={currentHealth}
+            maxValue={maxHealth}
+            onchangefunc={changeHealth}
+            onmaxchangedfunc={(newVal) => {
+                maxHealth = newVal;
+                if (maxHealth < currentHealth) {
+                    currentHealth = maxHealth;
+                }
+            }}
+            classAddition="**:data-[slot=progress-indicator]:bg-red-500"
+        />
         <!-- toughness bar -->
-        <InfoGauge 
+        <InfoGauge
             label="Toughness"
-            height=10
-            currentValue={currentToughness} 
-            maxValue={maxToughness} 
+            height="10"
+            currentValue={currentToughness}
+            maxValue={maxToughness}
             onchangefunc={changeToughness}
-            onmaxchangedfunc={(newVal) => {maxToughness = newVal; if(maxToughness < currentToughness) {currentToughness = maxToughness}}}
-            classAddition="**:data-[slot=progress-indicator]:bg-green-700"/>
+            onmaxchangedfunc={(newVal) => {
+                maxToughness = newVal;
+                if (maxToughness < currentToughness) {
+                    currentToughness = maxToughness;
+                }
+            }}
+            classAddition="**:data-[slot=progress-indicator]:bg-green-700"
+        />
         <!-- aether bar -->
-        <InfoGauge 
-            label="Aether" 
-            height=10
-            currentValue={currentAether} 
-            maxValue={maxAether} 
-            onchangefunc={changeAether} 
-            onmaxchangedfunc={(newVal) => {maxAether = newVal; if(maxAether < currentAether) {currentAether = maxAether}}}
-            classAddition="**:data-[slot=progress-indicator]:bg-blue-500"/>
+        <InfoGauge
+            label="Aether"
+            height="10"
+            currentValue={currentAether}
+            maxValue={maxAether}
+            onchangefunc={changeAether}
+            onmaxchangedfunc={(newVal) => {
+                maxAether = newVal;
+                if (maxAether < currentAether) {
+                    currentAether = maxAether;
+                }
+            }}
+            classAddition="**:data-[slot=progress-indicator]:bg-blue-500"
+        />
         <!-- sanity bar -->
-        <InfoGauge 
-            label="Sanity" 
-            height=10
-            currentValue={currentSanity} 
-            maxValue={maxSanity} 
+        <InfoGauge
+            label="Sanity"
+            height="10"
+            currentValue={currentSanity}
+            maxValue={maxSanity}
             onchangefunc={changeSanity}
-            onmaxchangedfunc={(newVal) => {maxSanity = newVal; if(maxSanity < currentSanity) {currentSanity = maxSanity}}} 
-            classAddition="**:data-[slot=progress-indicator]:bg-purple-400"/>
+            onmaxchangedfunc={(newVal) => {
+                maxSanity = newVal;
+                if (maxSanity < currentSanity) {
+                    currentSanity = maxSanity;
+                }
+            }}
+            classAddition="**:data-[slot=progress-indicator]:bg-purple-400"
+        />
+    </div>
+
+    <div class="flex flex-row justify-between w-full">
+        <div class="border-2 w-full m-1">
+            <Text class="text-center w-full text-xs">Tension Die</Text>
+            <ToggleGroup.Root type="single" value="d8" class="w-full justify-center">
+                <ToggleGroup.Item
+                    value="d10"
+                    aria-label="Toggle bold"
+                >(D10)</ToggleGroup.Item>
+                <ToggleGroup.Item
+                    value="d8"
+                    aria-label="Toggle bold"
+                >D8</ToggleGroup.Item>
+                <ToggleGroup.Item
+                    value="d6"
+                    aria-label="Toggle bold"
+                >D6</ToggleGroup.Item>
+                <ToggleGroup.Item
+                    value="d4"
+                    aria-label="Toggle bold"
+                >D4</ToggleGroup.Item>
+            </ToggleGroup.Root>
+        </div>
+        <div class="border-2 w-full m-1">
+                <Text class="text-center text-xs">Lair (d10) - Domain (d8)</Text>
+                <ToggleGroup.Root type="single" value="d10" class="w-full justify-center">
+                    <ToggleGroup.Item
+                        value="d10"
+                        aria-label="Toggle bold"
+                    >D10</ToggleGroup.Item>
+                    <ToggleGroup.Item
+                        value="d8"
+                        aria-label="Toggle bold"
+                    >D8</ToggleGroup.Item>
+                    <ToggleGroup.Item
+                        value="d6"
+                        aria-label="Toggle bold"
+                    >D6</ToggleGroup.Item>
+                    <ToggleGroup.Item
+                        value="d4"
+                        aria-label="Toggle bold"
+                    >D4</ToggleGroup.Item>
+                </ToggleGroup.Root>
+        </div>
     </div>
 
     <div class="grid grid-cols-2 gap-2 h-50">
@@ -180,11 +252,11 @@
                 </Button>
             </div>
             {#if exhaustionEffectActive}
-            <Card.Root class="w-full mt-2">
-                <Card.Content>
-                    <p>{exhaustionEffectText}</p>
-                </Card.Content>
-            </Card.Root>
+                <Card.Root class="w-full mt-2">
+                    <Card.Content>
+                        <p>{exhaustionEffectText}</p>
+                    </Card.Content>
+                </Card.Root>
             {/if}
         </div>
 
@@ -201,8 +273,8 @@
                     <ChevronRightIcon />
                 </Button>
             </div>
-            
-             <ButtonGroup.Root class="h-10 w-full">
+
+            <ButtonGroup.Root class="h-10 w-full">
                 <Button
                     variant="secondary"
                     onclick={() => changeLight(10)}
@@ -214,28 +286,44 @@
                     class="h-full w-1/2">+20</Button
                 >
             </ButtonGroup.Root>
-            
+
             {#if light == 0}
-            <Card.Root class="grow mt-2 mx-1">
-                <Card.Content>
-                    <p><b>Blinded</b>: Disadvantage non-Reason check, only basic attack, no targeting</p>
-                    <br/>
-                    <p><b>-1 sanity</b>/room</p>
-                </Card.Content>
-            </Card.Root>
+                <Card.Root class="grow mt-2 mx-1">
+                    <Card.Content>
+                        <p>
+                            <b>Blinded</b>: Disadvantage non-Reason check, only
+                            basic attack, no targeting
+                        </p>
+                        <br />
+                        <p><b>-1 sanity</b>/room</p>
+                    </Card.Content>
+                </Card.Root>
             {/if}
         </div>
     </div>
-    
+
     <Drawer.Root modal={false}>
-        <Drawer.Trigger class={[buttonVariants({ variant: "outline" }), "fixed bottom-0"]}>New Combat</Drawer.Trigger>
+        <Drawer.Trigger
+            class={[buttonVariants({ variant: "outline" }), "fixed bottom-0 left-5 w-[40%] h-10"]}
+            >Combat</Drawer.Trigger
+        >
         <Drawer.Content>
             <CombatTool></CombatTool>
         </Drawer.Content>
     </Drawer.Root>
     
-    <DefenseTable/>
-    <DamagePhase/>
-    <HitLocationTables/>
-    <CritsTable/>
+    <Drawer.Root modal={false}>
+        <Drawer.Trigger
+            class={[buttonVariants({ variant: "outline" }), "fixed bottom-0 right-5 w-[40%] h-10"]}
+            >Exploration</Drawer.Trigger
+        >
+        <Drawer.Content class="h-[90%]">
+            <ExplorationRef></ExplorationRef>
+        </Drawer.Content>
+    </Drawer.Root>
+
+    <DefenseTable />
+    <DamagePhase />
+    <HitLocationTables />
+    <CritsTable />
 </div>
