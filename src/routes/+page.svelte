@@ -26,6 +26,7 @@
     import HitLocationTables from "./components/hitlocationtables.svelte";
     import CritsTable from "./components/critstable.svelte";
     import { popupStates } from "./state.svelte";
+    import DifficultyTable from "./components/difficultytable.svelte";
 
   
   
@@ -326,4 +327,5 @@
     <DamagePhase />
     <HitLocationTables />
     <CritsTable />
+    <DifficultyTable />
 </div>

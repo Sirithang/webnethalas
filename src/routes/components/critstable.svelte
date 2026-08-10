@@ -1,5 +1,4 @@
 <script lang="ts" module>
-    import Button from "$lib/components/ui/button/button.svelte";
     import * as Dialog from "$lib/components/ui/dialog/index.js";
     import * as Tabs from "$lib/components/ui/tabs/index.js";
     import * as Table from "$lib/components/ui/table/index.js";
