@@ -1,6 +1,6 @@
 <script lang="ts">
-	import type { HTMLAttributes } from "svelte/elements";
 	import { cn, type WithElementRef } from "$lib/utils.js";
+	import type { HTMLAttributes } from "svelte/elements";
 
 	let {
 		ref = $bindable(null),
@@ -13,7 +13,7 @@
 <span
 	bind:this={ref}
 	data-slot="menubar-shortcut"
-	class={cn("text-muted-foreground ml-auto text-xs tracking-widest", className)}
+	class={cn("text-[0.625rem] tracking-widest text-muted-foreground group-focus/menubar-item:text-accent-foreground ml-auto", className)}
 	{...restProps}
 >
 	{@render children?.()}

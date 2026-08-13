@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { cn } from "$lib/utils.js";
 	import { type WithElementRef } from "bits-ui";
+	import { cn } from "$lib/utils.js";
 	import type { HTMLAttributes } from "svelte/elements";
 
 	let {
@@ -18,7 +18,7 @@
 	bind:this={ref}
 	data-slot="menubar-label"
 	data-inset={inset}
-	class={cn("px-2 py-1.5 text-sm font-medium data-[inset]:pl-8", className)}
+	class={cn("px-2 py-1.5 text-xs text-muted-foreground data-inset:pl-7.5", className)}
 	{...restProps}
 >
 	{@render children?.()}

@@ -12,9 +12,6 @@
 <MenubarPrimitive.Trigger
 	bind:ref
 	data-slot="menubar-trigger"
-	class={cn(
-		"focus:bg-primary rounded-md focus:text-accent-foreground data-[state=open]:bg-accent data-[state=open]:text-accent-foreground flex items-center px-2 py-1 text-sm font-medium outline-hidden select-none",
-		className
-	)}
+	class={cn("rounded-[calc(var(--radius-md)-2px)] px-2 py-[calc(--spacing(0.85))] text-xs/relaxed font-medium hover:bg-muted aria-expanded:bg-muted flex items-center outline-hidden select-none", className)}
 	{...restProps}
 />

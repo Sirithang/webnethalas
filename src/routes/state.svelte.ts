@@ -4,4 +4,5 @@ export let popupStates = $state({
     isHitLocationPopupShown: false,
     isCritsPopupShown: false,
     isDifficultyPopupShown: false,
+    isConditionPopupShown: false,
 });

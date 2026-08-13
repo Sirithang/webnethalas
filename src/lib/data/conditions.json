@@ -1,0 +1,44 @@
+{
+    "conditions": [
+        {
+            "name": "Bleeding (X)",
+            "effect": "<b>Combat</b>: Suffer X damage each round<br/><b>Out of Combat:</b> 1 damage per room",
+            "save": "Use 1 bandage and pass 1 Medicine check (out of combat)"
+        },
+        {
+            "name": "Blinded",
+            "effect": "Disadvantage to all check (except Reason)<br/>Can only do basic attack and cannot target location",
+            "save": ""
+        },
+        {
+            "name": "Burning",
+            "effect": "<b>Combat</b>: 1 Fire Damage/Round<br/><b>Out of Combat:</b> 1 Fire Damage/Room",
+            "save": "<b>Combat</b>: 1 Action.<br/><b>Out of Combat:</b>: Gain 2 Exhaustion"
+        },
+        {
+            "name": "Charmed",
+            "effect": "Cannot attack or harm the Charmer",
+            "save": ""
+        },
+        {
+            "name": "Concealed",
+            "effect": "Perception or Mind check needed to get attacked.",
+            "save": "Lost on being damaged or attacking"
+        },
+        {
+            "name": "Cursed",
+            "effect": "See description of the specific Curse",
+            "save": "See description of the specific Curse"
+        },
+        {
+            "name": "Dazed (X)",
+            "effect": "Cannot attack for X round",
+            "save": ""
+        },
+        {
+            "name": "Freezing",
+            "effect": "<b>Combat</b>:-10 to all Skills and act last in combat.<br/><b>Out of Combat:</b>:Worsen every 5 room. <i>Hypothermia</i> -50 to all, then Death after 10 room ",
+            "save": "<b>Combat</b>: Endurance check after 1st round. Re-attempted each round.<br/><b>Out of Combat:</b>:Endurance each room"
+        }
+    ]
+}

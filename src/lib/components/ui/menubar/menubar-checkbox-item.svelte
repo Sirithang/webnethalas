@@ -1,7 +1,8 @@
 <script lang="ts">
 	import { Menubar as MenubarPrimitive } from "bits-ui";
-	import CheckIcon from "@lucide/svelte/icons/check";
-	import MinusIcon from "@lucide/svelte/icons/minus";
+	import { HugeiconsIcon } from "@hugeicons/svelte"
+	import { MinusSignIcon } from '@hugeicons/core-free-icons';
+	import { Tick02Icon } from '@hugeicons/core-free-icons';
 	import { cn, type WithoutChildrenOrChild } from "$lib/utils.js";
 	import type { Snippet } from "svelte";
 
@@ -10,9 +11,11 @@
 		class: className,
 		checked = $bindable(false),
 		indeterminate = $bindable(false),
+		inset,
 		children: childrenProp,
 		...restProps
 	}: WithoutChildrenOrChild<MenubarPrimitive.CheckboxItemProps> & {
+		inset?: boolean;
 		children?: Snippet;
 	} = $props();
 </script>
@@ -22,18 +25,21 @@
 	bind:checked
 	bind:indeterminate
 	data-slot="menubar-checkbox-item"
+	data-inset={inset}
 	class={cn(
-		"focus:bg-primary rounded-md focus:text-accent-foreground relative flex cursor-default items-center gap-2 py-1.5 pr-2 pl-8 text-sm outline-hidden select-none data-[disabled]:pointer-events-none data-[disabled]:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+		"min-h-7 gap-2 rounded-md py-1.5 pr-2 pl-7.5 text-xs focus:bg-accent focus:text-accent-foreground focus:**:text-accent-foreground data-inset:pl-7.5 relative flex cursor-default items-center outline-hidden select-none data-disabled:pointer-events-none data-disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0",
 		className
 	)}
 	{...restProps}
 >
-	{#snippet children({ checked, indeterminate })}
-		<span class="pointer-events-none absolute left-2 flex size-3.5 items-center justify-center">
+	{#snippet children({ checked: checked, indeterminate: indeterminate })}
+		<span
+			class="left-2 size-4 [&_svg:not([class*='size-'])]:size-4 pointer-events-none absolute flex items-center justify-center"
+		>
 			{#if indeterminate}
-				<MinusIcon class="size-4" />
-			{:else}
-				<CheckIcon class={cn("size-4", !checked && "text-transparent")} />
+				<HugeiconsIcon icon={MinusSignIcon} strokeWidth={2}  />
+			{:else if checked}
+				<HugeiconsIcon icon={Tick02Icon} strokeWidth={2}  />
 			{/if}
 		</span>
 		{@render childrenProp?.()}

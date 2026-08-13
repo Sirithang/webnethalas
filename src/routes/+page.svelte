@@ -27,7 +27,7 @@
     import CritsTable from "./components/critstable.svelte";
     import { popupStates } from "./state.svelte";
     import DifficultyTable from "./components/difficultytable.svelte";
-
+    import ConditionsTable from "./components/conditionstable.svelte";
   
   
     let maxHealth = $state(15);
@@ -97,27 +97,24 @@
 
 <Menubar.Root>
     <Menubar.Menu>
-        <Menubar.Trigger>File</Menubar.Trigger>
-        <Menubar.Content></Menubar.Content>
-        <Menubar.Trigger>References</Menubar.Trigger>
-        <Menubar.Content>
-            <Menubar.Item
-                onclick={() => {
-                    popupStates.isCritsPopupShown = true;
-                }}>Crits Effects</Menubar.Item
-            >
-            <Menubar.Item
-                onclick={() => {
-                    popupStates.isDefensivePopupShown = true;
-                }}>Defense Tables</Menubar.Item
-            >
-            <Menubar.Item
-                onclick={() => {
-                    popupStates.isHitLocationPopupShown = true;
-                }}>Hit Location Tables</Menubar.Item
-            >
-        </Menubar.Content>
+        <Button value="crits"
+            onclick={() => {
+                popupStates.isCritsPopupShown = true;
+            }}>Crits</Button>
+        <Button value="defense"
+            onclick={() => {
+                popupStates.isDefensivePopupShown = true;
+            }}>Defense</Button>
+        <Button value="hit-loc"
+            onclick={() => {
+                popupStates.isHitLocationPopupShown = true;
+            }}>Hit Location</Button>
+        <Button value="condition"
+            onclick={() => {
+                popupStates.isConditionPopupShown = true;
+            }}>Conditions</Button>
     </Menubar.Menu>
+    <div class="grow"></div>
     <Button onclick={toggleMode} variant="outline" size="icon">
         <SunIcon
             class="h-[1.2rem] w-[1.2rem] scale-100 rotate-0 !transition-all dark:scale-0 dark:-rotate-90"
@@ -328,4 +325,5 @@
     <HitLocationTables />
     <CritsTable />
     <DifficultyTable />
+    <ConditionsTable />
 </div>
