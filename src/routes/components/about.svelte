@@ -1,15 +1,31 @@
 <script>
+    import Button from "$lib/components/ui/button/button.svelte";
     import * as Dialog from "$lib/components/ui/dialog/index.js";
-    import Text from "$lib/components/ui/text/text.svelte";
-
+    import ScrollArea from "$lib/components/ui/scroll-area/scroll-area.svelte";
     import { popupStates } from "../state.svelte";
 
 </script>
 <Dialog.Root bind:open={popupStates.isAboutPopupShown}>
-    <Dialog.Content class="grid-cols-[100%] h-[70%] content-start">
-        <Dialog.Header>
-            <Dialog.Title>Web Nethalas Tools</Dialog.Title>
-        </Dialog.Header>
-        
+    <Dialog.Content class="h-[70%] flex">
+        <ScrollArea class="h-full">
+            <div class="text-justify m-1">
+                <p>This is a simple companion tool to the <Button variant="link" href="https://kernethalas.com/">Ker Nethalas</Button> Solo Dungeon Crawler Game.</p>
+                <br/>
+                <p>It is designed to be run on a phone in portrait mode sitting next to you as you play.</p>
+                <br/>
+                <p>This is not intended to be a digital character sheet, as I enjoy having to physically draw map, roll dices and lookup things on tables but instead try to speed up play by removing some friction I encounter while playing.</p>
+                <br/>
+                <p><b>You cannot play with just that tools and will need the Game Book!</b>. The intend is not to replace the book, just make playing with it a bit more streamlined.</p>
+            
+                <br/>
+                <h1 class="text-lg">Features</h1>
+                <ul class="my-6 ms-6 list-disc [&>li]:mt-2">
+                    <li>Handle changing value (like Toughness, Aether etc.) to avoid constantly erasing the character sheet. Just track them on the app then commit their value to paper only when stopping playing to "save"</li>
+                    <li>Contain a combat tool to track enemies health pools + combat flow references like fumbles/defensives tables to avoid having to constantly flip pages away from the enemy stat block</li>
+                    <li>Contains an exploration references, especially how to detect trap/lock and handle them</li>
+                    <li>A couple of common references like conditions</li>
+                </ul>
+            </div>
+        </ScrollArea>
     </Dialog.Content>
 </Dialog.Root>

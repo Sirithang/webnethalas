@@ -29,7 +29,6 @@
     import DifficultyTable from "./components/difficultytable.svelte";
     import ConditionsTable from "./components/conditionstable.svelte";
     import AboutWindow from "./components/about.svelte";
-    import About from "./components/about.svelte";
   
   
     let maxHealth = $state(15);
@@ -329,5 +328,5 @@
     <CritsTable />
     <DifficultyTable />
     <ConditionsTable />
-    <About />
+    <AboutWindow />
 </div>
