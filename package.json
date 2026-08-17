@@ -18,6 +18,7 @@
 		"@internationalized/date": "^3.12.2",
 		"@lucide/svelte": "^1.25.0",
 		"@sveltejs/adapter-auto": "^7.0.1",
+		"@sveltejs/adapter-static": "^3.0.10",
 		"@sveltejs/kit": "^2.63.0",
 		"@sveltejs/vite-plugin-svelte": "^7.1.2",
 		"@tailwindcss/forms": "^0.5.11",
@@ -37,6 +38,7 @@
 	},
 	"dependencies": {
 		"bits-ui": "^2.18.1",
+		"http-server": "^14.1.1",
 		"mode-watcher": "^1.1.0"
 	}
 }

@@ -4,6 +4,9 @@
 	import { ModeWatcher } from "mode-watcher";
 
 	let { children } = $props();
+	
+	export const prerender = true;
+    export const ssr = true;
 </script>
 
 <ModeWatcher />
