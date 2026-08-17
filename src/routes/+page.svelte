@@ -28,6 +28,8 @@
     import { popupStates } from "./state.svelte";
     import DifficultyTable from "./components/difficultytable.svelte";
     import ConditionsTable from "./components/conditionstable.svelte";
+    import AboutWindow from "./components/about.svelte";
+    import About from "./components/about.svelte";
   
   
     let maxHealth = $state(15);
@@ -115,6 +117,7 @@
             }}>Conditions</Button>
     </Menubar.Menu>
     <div class="grow"></div>
+    <Button onclick={() => {popupStates.isAboutPopupShown = true;}} variant="outline" size="icon" >?</Button>
     <Button onclick={toggleMode} variant="outline" size="icon">
         <SunIcon
             class="h-[1.2rem] w-[1.2rem] scale-100 rotate-0 !transition-all dark:scale-0 dark:-rotate-90"
@@ -326,4 +329,5 @@
     <CritsTable />
     <DifficultyTable />
     <ConditionsTable />
+    <About />
 </div>
