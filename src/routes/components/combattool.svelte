@@ -2,7 +2,6 @@
     import Button from "$lib/components/ui/button/button.svelte";
     import * as Card from "$lib/components/ui/card/index.js";
     import * as Tabs from "$lib/components/ui/tabs/index.js";
-    import * as Table from "$lib/components/ui/table/index.js";
     import Text from "$lib/components/ui/text/text.svelte";
     import InfoGauge from "./infogauge.svelte";
     import { ScrollArea } from "$lib/components/ui/scroll-area/index.js";

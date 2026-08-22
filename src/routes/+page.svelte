@@ -1,6 +1,6 @@
 <script lang="ts">
     import * as Menubar from "$lib/components/ui/menubar/index.js";
-    import { Progress } from "$lib/components/ui/progress/index.js";
+    import { PersistedState } from "runed";
     import { Text } from "$lib/components/ui/text/index.js";
     import * as ToggleGroup from "$lib/components/ui/toggle-group/index.js";
     import * as Card from "$lib/components/ui/card/index.js";
@@ -28,59 +28,63 @@
     import { popupStates } from "./state.svelte";
     import DifficultyTable from "./components/difficultytable.svelte";
     import ConditionsTable from "./components/conditionstable.svelte";
+    import AboutWindow from "./components/about.svelte";
   
   
-    let maxHealth = $state(15);
-    let currentHealth = $state(15);
+    let maxHealth = new PersistedState("maxHealth", 15);
+    let currentHealth = new PersistedState("currentHealth", 15);
 
-    let maxToughness = $state(15);
-    let currentToughness = $state(15);
+    let maxToughness = new PersistedState("maxToughness", 15);
+    let currentToughness = new PersistedState("currentToughness", 15);
 
-    let maxAether = $state(15);
-    let currentAether = $state(15);
+    let maxAether = new PersistedState("maxAether", 15);
+    let currentAether = new PersistedState("currentAether", 15);
 
-    let maxSanity = $state(15);
-    let currentSanity = $state(15);
+    let maxSanity = new PersistedState("maxSanity", 15);
+    let currentSanity = new PersistedState("currentSanity", 15);
 
-    let exhaustion = $state(0);
-    let light = $state(0);
+    let exhaustion =  new PersistedState("exhaustion", 0);
+    let light = new PersistedState("light", 0);
 
     let exhaustionEffectActive = $state(false);
     let exhaustionEffectText = $state("");
+    
+    let currentTensionDie = new PersistedState("tensionDie", "d8");
+    let currentLairDie = new PersistedState("lairDie", "d8");
 
     function changeHealth(amount: number) {
-        currentHealth = Math.min(
-            maxHealth,
-            Math.max(0, currentHealth + amount),
+        currentHealth.current = Math.min(
+            maxHealth.current,
+            Math.max(0, currentHealth.current + amount),
         );
     }
 
     function changeToughness(amount: number) {
-        currentToughness = Math.min(
-            maxToughness,
-            Math.max(0, currentToughness + amount),
+        currentToughness.current = Math.min(
+            maxToughness.current,
+            Math.max(0, currentToughness.current + amount),
         );
     }
 
     function changeAether(amount: number) {
-        currentAether = Math.min(
-            maxAether,
-            Math.max(0, currentAether + amount),
+        currentAether.current = Math.min(
+            maxAether.current,
+            Math.max(0, currentAether.current + amount),
         );
     }
 
     function changeSanity(amount: number) {
-        currentSanity = Math.min(
-            maxSanity,
-            Math.max(0, currentSanity + amount),
+        currentSanity.current = Math.min(
+            maxSanity.current,
+            Math.max(0, currentSanity.current + amount),
         );
     }
 
     function changeExhaustion(amount: number) {
-        exhaustion = Math.max(0, exhaustion + amount);
+        exhaustion.current = Math.max(0, exhaustion.current + amount);
 
         for (var e of ExhaustionEffect.effects) {
-            if (e.lowThreshold <= exhaustion && e.highThreshold >= exhaustion) {
+            if (e.lowThreshold <= exhaustion.current && e.highThreshold >= exhaustion.current) {
                 exhaustionEffectActive = true;
                 exhaustionEffectText = e.effect;
                 return;
@@ -91,12 +95,20 @@
     }
 
     function changeLight(amount: number) {
-        light = Math.max(0, light + amount);
+        light.current = Math.max(0, light.current + amount);
     }
 </script>
 
 <Menubar.Root>
-    <Menubar.Menu>
+    <!-- <Menubar.Menu>
+        <Menubar.Trigger>File</Menubar.Trigger>
+        <Menubar.Content>
+        <Menubar.Item>
+            New Character...
+        </Menubar.Item>
+        </Menubar.Content>
+    </Menubar.Menu> -->
+    <div class="flex justify-center my-2">
         <Button value="crits"
             onclick={() => {
                 popupStates.isCritsPopupShown = true;
@@ -113,8 +125,9 @@
             onclick={() => {
                 popupStates.isConditionPopupShown = true;
             }}>Conditions</Button>
-    </Menubar.Menu>
+    </div>
     <div class="grow"></div>
+    <Button onclick={() => {popupStates.isAboutPopupShown = true;}} variant="outline" size="icon" >?</Button>
     <Button onclick={toggleMode} variant="outline" size="icon">
         <SunIcon
             class="h-[1.2rem] w-[1.2rem] scale-100 rotate-0 !transition-all dark:scale-0 dark:-rotate-90"
@@ -126,19 +139,19 @@
     </Button>
 </Menubar.Root>
 
-<div class="flex flex-col items-center mx-2 my-4">
+<div class="flex flex-col items-center mx-2">
     <div class="w-full">
         <!-- health bar -->
         <InfoGauge
             label="Health"
             height="10"
-            currentValue={currentHealth}
-            maxValue={maxHealth}
+            currentValue={currentHealth.current}
+            maxValue={maxHealth.current}
             onchangefunc={changeHealth}
             onmaxchangedfunc={(newVal) => {
-                maxHealth = newVal;
-                if (maxHealth < currentHealth) {
-                    currentHealth = maxHealth;
+                maxHealth.current = newVal;
+                if (maxHealth.current < currentHealth.current) {
+                    currentHealth.current = maxHealth.current;
                 }
             }}
             classAddition="**:data-[slot=progress-indicator]:bg-red-500"
@@ -147,13 +160,13 @@
         <InfoGauge
             label="Toughness"
             height="10"
-            currentValue={currentToughness}
-            maxValue={maxToughness}
+            currentValue={currentToughness.current}
+            maxValue={maxToughness.current}
             onchangefunc={changeToughness}
             onmaxchangedfunc={(newVal) => {
-                maxToughness = newVal;
-                if (maxToughness < currentToughness) {
-                    currentToughness = maxToughness;
+                maxToughness.current = newVal;
+                if (maxToughness.current < currentToughness.current) {
+                    currentToughness.current = maxToughness.current;
                 }
             }}
             classAddition="**:data-[slot=progress-indicator]:bg-green-700"
@@ -162,13 +175,13 @@
         <InfoGauge
             label="Aether"
             height="10"
-            currentValue={currentAether}
-            maxValue={maxAether}
+            currentValue={currentAether.current}
+            maxValue={maxAether.current}
             onchangefunc={changeAether}
             onmaxchangedfunc={(newVal) => {
-                maxAether = newVal;
-                if (maxAether < currentAether) {
-                    currentAether = maxAether;
+                maxAether.current = newVal;
+                if (maxAether.current < currentAether.current) {
+                    currentAether.current = maxAether.current;
                 }
             }}
             classAddition="**:data-[slot=progress-indicator]:bg-blue-500"
@@ -177,13 +190,13 @@
         <InfoGauge
             label="Sanity"
             height="10"
-            currentValue={currentSanity}
-            maxValue={maxSanity}
+            currentValue={currentSanity.current}
+            maxValue={maxSanity.current}
             onchangefunc={changeSanity}
             onmaxchangedfunc={(newVal) => {
-                maxSanity = newVal;
-                if (maxSanity < currentSanity) {
-                    currentSanity = maxSanity;
+                maxSanity.current = newVal;
+                if (maxSanity.current < currentSanity.current) {
+                    currentSanity.current = maxSanity.current;
                 }
             }}
             classAddition="**:data-[slot=progress-indicator]:bg-purple-400"
@@ -193,7 +206,7 @@
     <div class="flex flex-row justify-between w-full">
         <div class="border-2 w-full m-1">
             <Text class="text-center w-full text-xs">Tension Die</Text>
-            <ToggleGroup.Root type="single" value="d8" class="w-full justify-center">
+            <ToggleGroup.Root type="single" bind:value={currentTensionDie.current} class="w-full justify-center">
                 <ToggleGroup.Item
                     value="d10"
                     aria-label="Toggle bold"
@@ -214,7 +227,7 @@
         </div>
         <div class="border-2 w-full m-1">
                 <Text class="text-center text-xs">Lair (d10) - Domain (d8)</Text>
-                <ToggleGroup.Root type="single" value="d10" class="w-full justify-center">
+                <ToggleGroup.Root type="single" bind:value={currentLairDie.current} class="w-full justify-center">
                     <ToggleGroup.Item
                         value="d10"
                         aria-label="Toggle bold"
@@ -243,7 +256,7 @@
                 </Button>
                 <div class="mx-4">
                     <Text class="text-center">Exhaustion</Text>
-                    <Text class="text-center" as="h4">{exhaustion}</Text>
+                    <Text class="text-center" as="h4">{exhaustion.current}</Text>
                 </div>
                 <Button size="icon" onclick={() => changeExhaustion(1)}>
                     <ChevronRightIcon />
@@ -265,7 +278,7 @@
                 </Button>
                 <div class="grow">
                     <Text class="text-center">Light</Text>
-                    <Text class="text-center" as="h4">{light}</Text>
+                    <Text class="text-center" as="h4">{light.current}</Text>
                 </div>
                 <Button size="icon" onclick={() => changeLight(1)}>
                     <ChevronRightIcon />
@@ -326,4 +339,5 @@
     <CritsTable />
     <DifficultyTable />
     <ConditionsTable />
+    <AboutWindow />
 </div>

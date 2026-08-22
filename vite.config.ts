@@ -1,3 +1,4 @@
+import { mdsvex } from 'mdsvex';
 import tailwindcss from '@tailwindcss/vite';
 import adapter from '@sveltejs/adapter-static';
 import { sveltekit } from '@sveltejs/kit/vite';
@@ -16,11 +17,11 @@ export default defineConfig({
 				pages: 'build',
 				assets: 'build',
 				fallback: 'index.html',
-				precompress: true,
+				precompress: true
 			}),
-			paths: {
-				base: '/webnethalas',
-			},
+			paths: { base: '/webnethalas' },
+			preprocess: [mdsvex({ extensions: ['.svx', '.md'] })],
+			extensions: ['.svelte', '.svx', '.md']
 		})
 	]
 });

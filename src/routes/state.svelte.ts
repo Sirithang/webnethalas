@@ -5,4 +5,5 @@ export let popupStates = $state({
     isCritsPopupShown: false,
     isDifficultyPopupShown: false,
     isConditionPopupShown: false,
+    isAboutPopupShown: false
 });

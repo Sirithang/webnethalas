@@ -39,6 +39,46 @@
             "name": "Freezing",
             "effect": "<b>Combat</b>:-10 to all Skills and act last in combat.<br/><b>Out of Combat:</b>:Worsen every 5 room. <i>Hypothermia</i> -50 to all, then Death after 10 room ",
             "save": "<b>Combat</b>: Endurance check after 1st round. Re-attempted each round.<br/><b>Out of Combat:</b>:Endurance each room"
+        },
+        {
+            "name": "Frightened(XX)",
+            "effect": "All attack skill against source of fear have -XX",
+            "save": "-10 to XX at end of each turn"
+        },
+        {
+            "name": "Paralyzed",
+            "effect": "Attack hit automatically",
+            "save": ""
+        },
+        {
+            "name": "Poisoned (X)",
+            "effect": "<b>Combat</b>: X Poisoned Damage/turn. Can be resisted by passing an Endurance check as Free action<br/><b>Out of Combat</b>: -1 DIRECTLY TO HEALTH/turn", 
+            "save": "<b>Out of Combat ONLY</b>: Removed with 1 bandage and successful Medicine Check"
+        },
+        {
+            "name": "Prone",
+            "effect": "Attack against done with advantage, Attack FROM prone with disadvantage, only basic attack, can't target or be abilities",
+            "save": "Can use Free Action to standup, but opponent roll on defensive table"
+        },
+        {
+            "name": "Restrained",
+            "effect": "Can't move. Weapon Skills, Acrobatic, Dodge, Athletic, Body checks with -20",
+            "save": "Athletic/Body check. Free Action but if done as Action, +20"
+        },
+        {
+            "name": "Sickened (XX)",
+            "effect": "-XX on all checks",
+            "save": "Per Condition specific"
+        },
+        {
+            "name": "Sleeping",
+            "effect": "Prone + Attack hit automatically",
+            "save": "Takes Damage"
+        },
+        {
+            "name": "Stunned (X)",
+            "effect": "Cannot act for X turn (cumlative if new stun added). Attacker still need to pass attack check.",
+            "save": "-1 per turn until 0"
         }
     ]
 }
