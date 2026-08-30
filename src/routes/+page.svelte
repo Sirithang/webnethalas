@@ -2,6 +2,7 @@
     import * as Menubar from "$lib/components/ui/menubar/index.js";
     import { PersistedState } from "runed";
     import { Text } from "$lib/components/ui/text/index.js";
+    import { Progress } from "$lib/components/ui/progress/index.js";
     import * as ToggleGroup from "$lib/components/ui/toggle-group/index.js";
     import * as Card from "$lib/components/ui/card/index.js";
 
@@ -48,6 +49,8 @@
 
     let exhaustionEffectActive = $state(false);
     let exhaustionEffectText = $state("");
+    
+    let currentExperience = new PersistedState("experience", 0);
     
     let currentTensionDie = new PersistedState("tensionDie", "d8");
     let currentLairDie = new PersistedState("lairDie", "d8");
@@ -97,6 +100,14 @@
     function changeLight(amount: number) {
         light.current = Math.max(0, light.current + amount);
     }
+    
+    function changeExperience(amount: number) {
+        currentExperience.current = Math.max(0, currentExperience.current + amount);
+        
+        if(currentExperience.current >= 1000)
+            currentExperience.current -= 1000;
+    }
+    
 </script>
 
 <Menubar.Root>
@@ -130,10 +141,10 @@
     <Button onclick={() => {popupStates.isAboutPopupShown = true;}} variant="outline" size="icon" >?</Button>
     <Button onclick={toggleMode} variant="outline" size="icon">
         <SunIcon
-            class="h-[1.2rem] w-[1.2rem] scale-100 rotate-0 !transition-all dark:scale-0 dark:-rotate-90"
+            class="h-[1.2rem] w-[1.2rem] scale-100 rotate-0 transition-all! dark:scale-0 dark:-rotate-90"
         />
         <MoonIcon
-            class="absolute h-[1.2rem] w-[1.2rem] scale-0 rotate-90 !transition-all dark:scale-100 dark:rotate-0"
+            class="absolute h-[1.2rem] w-[1.2rem] scale-0 rotate-90 transition-all! dark:scale-100 dark:rotate-0"
         />
         <span class="sr-only">Toggle theme</span>
     </Button>
@@ -144,11 +155,11 @@
         <!-- health bar -->
         <InfoGauge
             label="Health"
-            height="10"
+            height={10}
             currentValue={currentHealth.current}
             maxValue={maxHealth.current}
             onchangefunc={changeHealth}
-            onmaxchangedfunc={(newVal) => {
+            onmaxchangedfunc={(newVal:number) => {
                 maxHealth.current = newVal;
                 if (maxHealth.current < currentHealth.current) {
                     currentHealth.current = maxHealth.current;
@@ -159,11 +170,11 @@
         <!-- toughness bar -->
         <InfoGauge
             label="Toughness"
-            height="10"
+            height={10}
             currentValue={currentToughness.current}
             maxValue={maxToughness.current}
             onchangefunc={changeToughness}
-            onmaxchangedfunc={(newVal) => {
+            onmaxchangedfunc={(newVal:number) => {
                 maxToughness.current = newVal;
                 if (maxToughness.current < currentToughness.current) {
                     currentToughness.current = maxToughness.current;
@@ -174,11 +185,11 @@
         <!-- aether bar -->
         <InfoGauge
             label="Aether"
-            height="10"
+            height={10}
             currentValue={currentAether.current}
             maxValue={maxAether.current}
             onchangefunc={changeAether}
-            onmaxchangedfunc={(newVal) => {
+            onmaxchangedfunc={(newVal:number) => {
                 maxAether.current = newVal;
                 if (maxAether.current < currentAether.current) {
                     currentAether.current = maxAether.current;
@@ -189,11 +200,11 @@
         <!-- sanity bar -->
         <InfoGauge
             label="Sanity"
-            height="10"
+            height={10}
             currentValue={currentSanity.current}
             maxValue={maxSanity.current}
             onchangefunc={changeSanity}
-            onmaxchangedfunc={(newVal) => {
+            onmaxchangedfunc={(newVal:number) => {
                 maxSanity.current = newVal;
                 if (maxSanity.current < currentSanity.current) {
                     currentSanity.current = maxSanity.current;
@@ -298,13 +309,10 @@
                 >
             </ButtonGroup.Root>
 
-            {#if light == 0}
-                <Card.Root class="grow mt-2 mx-1">
+            {#if light.current == 0}
+                <Card.Root class="grow mt-2 w-full">
                     <Card.Content>
-                        <p>
-                            <b>Blinded</b>: Disadvantage non-Reason check, only
-                            basic attack, no targeting
-                        </p>
+                        <p><b>Blinded</b></p>
                         <br />
                         <p><b>-1 sanity</b>/room</p>
                     </Card.Content>
@@ -312,14 +320,60 @@
             {/if}
         </div>
     </div>
-
+    
+    <div class="w-full flex flex-col gap-1">
+        <!-- <div class="grow relative px-1 h-6 w-full" role="button" tabindex=0>
+            <Progress
+                value={currentExperience.current}
+                max={1000}
+                class="grow h-full"
+            />
+            <Text
+                class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10"
+            >
+                Exp:{currentExperience.current}/1000
+            </Text>
+        </div> -->
+        <InfoGauge
+            label="Experience"
+            height={10}
+            currentValue={currentExperience.current}
+            maxValue={1000}
+            onchangefunc={changeExperience}
+            onmaxchangedfunc={() => {}}
+            maxEditable={false}
+            classAddition="**:data-[slot=progress-indicator]:bg-yellow-600"
+        />
+        <div class="grid w-full grid-flow-row grid-cols-2">
+            <Button class="flex" onclick={() => {changeExperience(10)}}>
+                Door/Container Unlocked
+            </Button>
+            <Button class="flex" onclick={() => {changeExperience(10)}}>
+                Trap Disarmed
+            </Button>
+            <Button class="flex" onclick={() => {changeExperience(10)}}>
+                Lore Book Found
+            </Button>
+            <Button class="flex" onclick={() => {changeExperience(50)}}>
+                New Domain Entered
+            </Button>
+            <Button class="flex" onclick={() => {changeExperience(50)}}>
+                Regular Combat Won
+            </Button>
+            <Button class="flex" onclick={() => {changeExperience(200)}}>
+                Overseer Defeated
+            </Button>
+        </div>
+    </div>
+    
     <Drawer.Root modal={false}>
         <Drawer.Trigger
             class={[buttonVariants({ variant: "outline" }), "fixed bottom-0 left-5 w-[40%] h-10"]}
-            >Combat</Drawer.Trigger
-        >
+            >Combat</Drawer.Trigger>
         <Drawer.Content>
-            <CombatTool></CombatTool>
+            <CombatTool
+                xpGranted = {(amount:number) => { changeExperience(amount); }}
+            ></CombatTool>
         </Drawer.Content>
     </Drawer.Root>
     

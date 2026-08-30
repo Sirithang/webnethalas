@@ -186,6 +186,10 @@
                 {
                     "roll": "16-18",
                     "location": "Left Front Leg"
+                },
+                {
+                    "roll": "19-20",
+                    "location": "Head"
                 }
             ]
         },

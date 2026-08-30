@@ -6,6 +6,7 @@
     import InfoGauge from "./infogauge.svelte";
     import { ScrollArea } from "$lib/components/ui/scroll-area/index.js";
     import { popupStates } from '../state.svelte.js';
+    import { PersistedState } from "runed";
 
     
     interface EnemyData {
@@ -13,15 +14,15 @@
         maxHealth: number
     }
 
-    let currentEnemies: EnemyData[] = $state([]);
+    let currentEnemies = new PersistedState("enemiesData", [] as EnemyData[]);
     
-    let currentCombatStage = $state(0);
-    let stealthAttempted = $state(false);
-    let stealthWon = $state(false);
-    let initiativeWon = $state(false);
+    let currentCombatStage = new PersistedState("combatStage", 0);
+    let stealthAttempted = new PersistedState("stealthAttempted", false);
+    let stealthWon = new PersistedState("stealthWon", false);
+    let initiativeWon = new PersistedState("initiativeWon", false);
     
     function addEnemy() {
-        currentEnemies.push({maxHealth: 10, currentHealth: 10} as EnemyData)
+        currentEnemies.current.push({maxHealth: 10, currentHealth: 10} as EnemyData)
     }
     
     function changeEnemyHealth(enemy: EnemyData, amount: number) {
@@ -36,13 +37,17 @@
     }
     
     function startNewFight() {
-        currentCombatStage = 0;
-        currentEnemies = [];
+        currentCombatStage.current = 0;
+        currentEnemies.current = [];
     }
+    
+    
 </script>
 
 <script lang="ts">
-
+let {
+        xpGranted
+    } = $props();
 </script>
 
 <div class="h-[55vh]">
@@ -50,14 +55,14 @@
         <Card.Content class="flex flex-col items-center h-full">
             <ScrollArea class="w-full h-full">
                 <div class="flex flex-col items-center">
-                {#each currentEnemies as e}
+                {#each currentEnemies.current as e}
                 <InfoGauge 
                     currentValue={e.currentHealth} 
                     maxValue={e.maxHealth} 
                     label="Health" 
-                    height = 3                          
-                    onchangefunc={(change) => changeEnemyHealth(e, change)}
-                        onmaxchangedfunc={(newVal) => {changeEnemyMaxHealth(e, newVal)}}/>
+                    height = {3}                          
+                    onchangefunc={(change:number) => changeEnemyHealth(e, change)}
+                        onmaxchangedfunc={(newVal:number) => {changeEnemyMaxHealth(e, newVal)}}/>
                 {/each}
                 <Button onclick={addEnemy}>New Enemy</Button>
                 </div>
@@ -68,23 +73,23 @@
         <Card.Content class="h-2/3">
             <ScrollArea class="w-full">
                 <div class="h-fit">
-                    {#if currentCombatStage == 0}
-                        {#if !stealthAttempted}
+                    {#if currentCombatStage.current == 0}
+                        {#if !stealthAttempted.current}
                             <Text><b>Attempt Surprise:</b> Stealth vs Enemy Mind.</Text>
                             <div class="flex flex-row">
-                                <Button onclick={() => { initiativeWon = true; stealthWon = true; currentCombatStage = 1; }}>Succeded</Button>
-                                <Button onclick={() => { stealthAttempted = true; stealthWon = false; }}>Failed</Button>
+                                <Button onclick={() => { initiativeWon.current = true; stealthWon.current = true; currentCombatStage.current = 1; }}>Succeded</Button>
+                                <Button onclick={() => { stealthAttempted.current = true; stealthWon.current = false; }}>Failed</Button>
                             </div>
                         {/if}
-                        <Text><b>Initiative Check:</b> Perception {stealthAttempted && !stealthWon ? "(-20, stealth failed)" : "" } vs Enemy Mind.</Text>
+                        <Text><b>Initiative Check:</b> Perception {stealthAttempted.current && !stealthWon.current ? "(-20, stealth failed)" : "" } vs Enemy Mind.</Text>
                         <div class="flex flex-row">
-                            <Button onclick={ () => { initiativeWon = true; currentCombatStage = 1; }}>Succeded</Button>
-                            <Button onclick={ () => { initiativeWon = false; currentCombatStage = 1; }}>Failed</Button>
+                            <Button onclick={ () => { initiativeWon.current = true; currentCombatStage.current = 1; }}>Succeded</Button>
+                            <Button onclick={ () => { initiativeWon.current = false; currentCombatStage.current = 1; }}>Failed</Button>
                         </div>
-                    {:else if currentCombatStage == 1}
+                    {:else if currentCombatStage.current == 1}
                         <div class="flex flex-row">
-                            <Text class="grow">1st: {initiativeWon ? "Player" : "Enemies"}</Text>
-                            {#if stealthWon}
+                            <Text class="grow">1st: {initiativeWon.current ? "Player" : "Enemies"}</Text>
+                            {#if stealthWon.current}
                             <Text class="grow">|</Text>
                             <Text class="grow font-bold">Stealth Won:+20 on first attack</Text>
                             {/if}
@@ -104,10 +109,14 @@
                             <Tabs.Content value="magic"><Text>Magic → Spellward or Magic Resistance check</Text></Tabs.Content>
                         </Tabs.Root>
                         
-                        <Button onclick={() => {currentCombatStage = 2;}}>End Fight</Button>
+                        <Button onclick={() => {currentCombatStage.current = 2;}}>End Fight</Button>
                     {:else}
                         <Text>Recover 1D4 Toughness</Text>
-                        <Button onclick={startNewFight}>New Fight</Button>
+                        <div>
+                            <Button onclick={() => { xpGranted(50); startNewFight();}}>Regular Fight Won(+50XP)</Button>
+                            <Button onclick={() => { xpGranted(200); startNewFight(); }}>Overseer Defeated(+200XP)</Button>
+                            <Button onclick={startNewFight}>New Fight</Button>
+                        </div>
                     {/if}
                 </div>
             </ScrollArea>

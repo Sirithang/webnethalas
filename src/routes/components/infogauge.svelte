@@ -16,6 +16,7 @@
         onmaxchangedfunc,
         classAddition,
         height = 12,
+        maxEditable = true,
      } = $props();
      
      let editDialogOpen = $state(false)
@@ -36,7 +37,7 @@
         >
     </ButtonGroup.Root>
     <!-- svelte-ignore a11y_click_events_have_key_events -->
-    <div class="grow relative px-1 h-full" role="button" tabindex=0 onclick={() => {editDialogOpen = true;}}>
+    <div class="grow relative px-1 h-full" role="button" tabindex=0 onclick={() => { if(maxEditable) editDialogOpen = true;}}>
         <Progress
             value={currentValue}
             max={maxValue}
