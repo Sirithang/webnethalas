@@ -30,8 +30,9 @@
     import DifficultyTable from "./components/difficultytable.svelte";
     import ConditionsTable from "./components/conditionstable.svelte";
     import AboutWindow from "./components/about.svelte";
-  
-  
+    import FumbleTable from "./components/fumbletable.svelte";
+    import TrapsTable from "./components/trapstable.svelte";
+
     let maxHealth = new PersistedState("maxHealth", 15);
     let currentHealth = new PersistedState("currentHealth", 15);
 
@@ -44,14 +45,14 @@
     let maxSanity = new PersistedState("maxSanity", 15);
     let currentSanity = new PersistedState("currentSanity", 15);
 
-    let exhaustion =  new PersistedState("exhaustion", 0);
+    let exhaustion = new PersistedState("exhaustion", 0);
     let light = new PersistedState("light", 0);
 
     let exhaustionEffectActive = $state(false);
     let exhaustionEffectText = $state("");
-    
+
     let currentExperience = new PersistedState("experience", 0);
-    
+
     let currentTensionDie = new PersistedState("tensionDie", "d8");
     let currentLairDie = new PersistedState("lairDie", "d8");
 
@@ -87,7 +88,10 @@
         exhaustion.current = Math.max(0, exhaustion.current + amount);
 
         for (var e of ExhaustionEffect.effects) {
-            if (e.lowThreshold <= exhaustion.current && e.highThreshold >= exhaustion.current) {
+            if (
+                e.lowThreshold <= exhaustion.current &&
+                e.highThreshold >= exhaustion.current
+            ) {
                 exhaustionEffectActive = true;
                 exhaustionEffectText = e.effect;
                 return;
@@ -100,45 +104,66 @@
     function changeLight(amount: number) {
         light.current = Math.max(0, light.current + amount);
     }
-    
+
     function changeExperience(amount: number) {
-        currentExperience.current = Math.max(0, currentExperience.current + amount);
-        
-        if(currentExperience.current >= 1000)
+        currentExperience.current = Math.max(
+            0,
+            currentExperience.current + amount,
+        );
+
+        if (currentExperience.current >= 1000)
             currentExperience.current -= 1000;
     }
-    
 </script>
 
 <Menubar.Root>
-    <!-- <Menubar.Menu>
-        <Menubar.Trigger>File</Menubar.Trigger>
-        <Menubar.Content>
-        <Menubar.Item>
-            New Character...
-        </Menubar.Item>
-        </Menubar.Content>
-    </Menubar.Menu> -->
     <div class="flex justify-center my-2">
-        <Button value="crits"
+        <Button
+            value="crits"
             onclick={() => {
                 popupStates.isCritsPopupShown = true;
-            }}>Crits</Button>
-        <Button value="defense"
-            onclick={() => {
-                popupStates.isDefensivePopupShown = true;
-            }}>Defense</Button>
-        <Button value="hit-loc"
-            onclick={() => {
-                popupStates.isHitLocationPopupShown = true;
-            }}>Hit Location</Button>
-        <Button value="condition"
+            }}>Crits</Button
+        >
+        <Button
+            value="condition"
             onclick={() => {
                 popupStates.isConditionPopupShown = true;
-            }}>Conditions</Button>
+            }}>Conditions</Button
+        >
     </div>
+    <Menubar.Menu>
+        <Menubar.Trigger>Tables</Menubar.Trigger>
+        <Menubar.Content>
+            <Menubar.Item
+                onSelect={() => {
+                    popupStates.isHitLocationPopupShown = true;
+                }}>Hit Locations</Menubar.Item
+            >
+            <Menubar.Item
+                onSelect={() => {
+                    popupStates.isDefensivePopupShown = true;
+                }}>Defense Tables</Menubar.Item
+            >
+            <Menubar.Item
+                onSelect={() => {
+                    popupStates.isFumblePopupShown = true;
+                }}>Fumbles</Menubar.Item
+            >
+            <Menubar.Item
+                onSelect={() => {
+                    popupStates.isTrapsPopupShown = true;
+                }}>Traps</Menubar.Item
+            >
+        </Menubar.Content>
+    </Menubar.Menu>
     <div class="grow"></div>
-    <Button onclick={() => {popupStates.isAboutPopupShown = true;}} variant="outline" size="icon" >?</Button>
+    <Button
+        onclick={() => {
+            popupStates.isAboutPopupShown = true;
+        }}
+        variant="outline"
+        size="icon">?</Button
+    >
     <Button onclick={toggleMode} variant="outline" size="icon">
         <SunIcon
             class="h-[1.2rem] w-[1.2rem] scale-100 rotate-0 transition-all! dark:scale-0 dark:-rotate-90"
@@ -159,7 +184,7 @@
             currentValue={currentHealth.current}
             maxValue={maxHealth.current}
             onchangefunc={changeHealth}
-            onmaxchangedfunc={(newVal:number) => {
+            onmaxchangedfunc={(newVal: number) => {
                 maxHealth.current = newVal;
                 if (maxHealth.current < currentHealth.current) {
                     currentHealth.current = maxHealth.current;
@@ -174,7 +199,7 @@
             currentValue={currentToughness.current}
             maxValue={maxToughness.current}
             onchangefunc={changeToughness}
-            onmaxchangedfunc={(newVal:number) => {
+            onmaxchangedfunc={(newVal: number) => {
                 maxToughness.current = newVal;
                 if (maxToughness.current < currentToughness.current) {
                     currentToughness.current = maxToughness.current;
@@ -189,7 +214,7 @@
             currentValue={currentAether.current}
             maxValue={maxAether.current}
             onchangefunc={changeAether}
-            onmaxchangedfunc={(newVal:number) => {
+            onmaxchangedfunc={(newVal: number) => {
                 maxAether.current = newVal;
                 if (maxAether.current < currentAether.current) {
                     currentAether.current = maxAether.current;
@@ -204,7 +229,7 @@
             currentValue={currentSanity.current}
             maxValue={maxSanity.current}
             onchangefunc={changeSanity}
-            onmaxchangedfunc={(newVal:number) => {
+            onmaxchangedfunc={(newVal: number) => {
                 maxSanity.current = newVal;
                 if (maxSanity.current < currentSanity.current) {
                     currentSanity.current = maxSanity.current;
@@ -217,45 +242,45 @@
     <div class="flex flex-row justify-between w-full">
         <div class="border-2 w-full m-1">
             <Text class="text-center w-full text-xs">Tension Die</Text>
-            <ToggleGroup.Root type="single" bind:value={currentTensionDie.current} class="w-full justify-center">
-                <ToggleGroup.Item
-                    value="d10"
-                    aria-label="Toggle bold"
-                >(D10)</ToggleGroup.Item>
-                <ToggleGroup.Item
-                    value="d8"
-                    aria-label="Toggle bold"
-                >D8</ToggleGroup.Item>
-                <ToggleGroup.Item
-                    value="d6"
-                    aria-label="Toggle bold"
-                >D6</ToggleGroup.Item>
-                <ToggleGroup.Item
-                    value="d4"
-                    aria-label="Toggle bold"
-                >D4</ToggleGroup.Item>
+            <ToggleGroup.Root
+                type="single"
+                bind:value={currentTensionDie.current}
+                class="w-full justify-center"
+            >
+                <ToggleGroup.Item value="d10" aria-label="Toggle bold"
+                    >(D10)</ToggleGroup.Item
+                >
+                <ToggleGroup.Item value="d8" aria-label="Toggle bold"
+                    >D8</ToggleGroup.Item
+                >
+                <ToggleGroup.Item value="d6" aria-label="Toggle bold"
+                    >D6</ToggleGroup.Item
+                >
+                <ToggleGroup.Item value="d4" aria-label="Toggle bold"
+                    >D4</ToggleGroup.Item
+                >
             </ToggleGroup.Root>
         </div>
         <div class="border-2 w-full m-1">
-                <Text class="text-center text-xs">Lair (d10) - Domain (d8)</Text>
-                <ToggleGroup.Root type="single" bind:value={currentLairDie.current} class="w-full justify-center">
-                    <ToggleGroup.Item
-                        value="d10"
-                        aria-label="Toggle bold"
-                    >D10</ToggleGroup.Item>
-                    <ToggleGroup.Item
-                        value="d8"
-                        aria-label="Toggle bold"
-                    >D8</ToggleGroup.Item>
-                    <ToggleGroup.Item
-                        value="d6"
-                        aria-label="Toggle bold"
-                    >D6</ToggleGroup.Item>
-                    <ToggleGroup.Item
-                        value="d4"
-                        aria-label="Toggle bold"
-                    >D4</ToggleGroup.Item>
-                </ToggleGroup.Root>
+            <Text class="text-center text-xs">Lair (d10) - Domain (d8)</Text>
+            <ToggleGroup.Root
+                type="single"
+                bind:value={currentLairDie.current}
+                class="w-full justify-center"
+            >
+                <ToggleGroup.Item value="d10" aria-label="Toggle bold"
+                    >D10</ToggleGroup.Item
+                >
+                <ToggleGroup.Item value="d8" aria-label="Toggle bold"
+                    >D8</ToggleGroup.Item
+                >
+                <ToggleGroup.Item value="d6" aria-label="Toggle bold"
+                    >D6</ToggleGroup.Item
+                >
+                <ToggleGroup.Item value="d4" aria-label="Toggle bold"
+                    >D4</ToggleGroup.Item
+                >
+            </ToggleGroup.Root>
         </div>
     </div>
 
@@ -267,7 +292,8 @@
                 </Button>
                 <div class="mx-4">
                     <Text class="text-center">Exhaustion</Text>
-                    <Text class="text-center" as="h4">{exhaustion.current}</Text>
+                    <Text class="text-center" as="h4">{exhaustion.current}</Text
+                    >
                 </div>
                 <Button size="icon" onclick={() => changeExhaustion(1)}>
                     <ChevronRightIcon />
@@ -320,7 +346,7 @@
             {/if}
         </div>
     </div>
-    
+
     <div class="w-full flex flex-col gap-1">
         <!-- <div class="grow relative px-1 h-6 w-full" role="button" tabindex=0>
             <Progress
@@ -345,42 +371,79 @@
             classAddition="**:data-[slot=progress-indicator]:bg-yellow-600"
         />
         <div class="grid w-full grid-flow-row grid-cols-2">
-            <Button class="flex" onclick={() => {changeExperience(10)}}>
+            <Button
+                class="flex"
+                onclick={() => {
+                    changeExperience(10);
+                }}
+            >
                 Door/Container Unlocked
             </Button>
-            <Button class="flex" onclick={() => {changeExperience(10)}}>
+            <Button
+                class="flex"
+                onclick={() => {
+                    changeExperience(10);
+                }}
+            >
                 Trap Disarmed
             </Button>
-            <Button class="flex" onclick={() => {changeExperience(10)}}>
+            <Button
+                class="flex"
+                onclick={() => {
+                    changeExperience(10);
+                }}
+            >
                 Lore Book Found
             </Button>
-            <Button class="flex" onclick={() => {changeExperience(50)}}>
+            <Button
+                class="flex"
+                onclick={() => {
+                    changeExperience(50);
+                }}
+            >
                 New Domain Entered
             </Button>
-            <Button class="flex" onclick={() => {changeExperience(50)}}>
+            <Button
+                class="flex"
+                onclick={() => {
+                    changeExperience(50);
+                }}
+            >
                 Regular Combat Won
             </Button>
-            <Button class="flex" onclick={() => {changeExperience(200)}}>
+            <Button
+                class="flex"
+                onclick={() => {
+                    changeExperience(200);
+                }}
+            >
                 Overseer Defeated
             </Button>
         </div>
     </div>
-    
+
     <Drawer.Root modal={false}>
         <Drawer.Trigger
-            class={[buttonVariants({ variant: "outline" }), "fixed bottom-0 left-5 w-[40%] h-10"]}
-            >Combat</Drawer.Trigger>
+            class={[
+                buttonVariants({ variant: "outline" }),
+                "fixed bottom-0 left-5 w-[40%] h-10",
+            ]}>Combat</Drawer.Trigger
+        >
         <Drawer.Content>
             <CombatTool
-                xpGranted = {(amount:number) => { changeExperience(amount); }}
+                xpGranted={(amount: number) => {
+                    changeExperience(amount);
+                }}
             ></CombatTool>
         </Drawer.Content>
     </Drawer.Root>
-    
+
     <Drawer.Root modal={false}>
         <Drawer.Trigger
-            class={[buttonVariants({ variant: "outline" }), "fixed bottom-0 right-5 w-[40%] h-10"]}
-            >Exploration</Drawer.Trigger
+            class={[
+                buttonVariants({ variant: "outline" }),
+                "fixed bottom-0 right-5 w-[40%] h-10",
+            ]}>Exploration</Drawer.Trigger
         >
         <Drawer.Content class="h-[90%]">
             <ExplorationRef></ExplorationRef>
@@ -393,5 +456,7 @@
     <CritsTable />
     <DifficultyTable />
     <ConditionsTable />
+    <FumbleTable />
+    <TrapsTable />
     <AboutWindow />
 </div>

@@ -1,0 +1,54 @@
+{
+    "traps" : [
+        {
+            "roll":"1",
+            "skill":"Dodge",
+            "effect":"Arrows Trap. 2D6 Percing Damage"
+        },
+        {
+            "roll":"2",
+            "skill":"Dodge",
+            "effect":"Bear Trap. 2D6 Piercing Damage"
+        },
+        {
+            "roll":"3",
+            "skill":"Dodge",
+            "effect":"Net Trap. Become <i>Restrained</i> Each attempt at escape +1 Exahustion unless help by someone else. After D6 attempts, net break but takes 2D8 Bludgeoning Damage"
+        },
+        {
+            "roll":"4",
+            "skill":"Dodge",
+            "effect":"Poisoned Darts Trap. Become <i>Poisoned(1)</i> unless pass Endurance check. Also take 2D4 Piercing Damages"
+        },
+        {
+            "roll":"5",
+            "skill":"Acrobatics",
+            "effect":"Spikes Hole Trap. 3D4 Piercing Damage"
+        },
+        {
+            "roll":"6",
+            "skill":"Dodge",
+            "effect":"Swinging Blade Trap. D12 Slashing Damage"
+        },
+        {
+            "roll":"7",
+            "skill":"Athletics",
+            "effect":"Noxious Gas Trap. <b>all creatures in the room</b> pass Endurance Check or take 2D4 Poison Damage"
+        },
+        {
+            "roll":"8",
+            "skill":"Acrobatics",
+            "effect":"Fireball Trap. 2D6 to <b>all creatures in the room</b>"
+        },
+        {
+            "roll":"9",
+            "skill":"Dodge",
+            "effect":"Alarm Trap. Roll on combat encounter table (p"
+        },
+        {
+            "roll":"10",
+            "skill":"Athletics",
+            "effect":"Water trap. 3D4 Bludgeoning damage to <b>all creatures in the room</b>"
+        }
+    ]
+}

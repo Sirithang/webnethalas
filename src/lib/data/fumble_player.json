@@ -1,0 +1,14 @@
+{
+    "fumbles" : [
+        "Drop Weapon. Use next turn to pick up or draw another. -20 to attack if no weapon",
+        "Weapon get stuck in wall. Athletic check to retrieve. -20 if no weapon",
+        "Weapon break if non magical (can be fixed at campl). If magical, use next turn to retrieve. -20 if no weapon",
+        "Make Belt Check, item picked get destroyed. If no belt take 1 Piercing damage",
+        "Loose D8 Aether. If no Aether, 1 piercing damage",
+        "Trip, lossing this action. Now <i>Prone</i>, must use Standard Action to get back up next turn",
+        "Trip and slam your head. <i>Prone</i> and <i>Dazed(2)</i>",
+        "Your attack hits a random ally. If no ally, hit yourself",
+        "Strike yourself with a normal attack",
+        "Critical Strike yourself"
+    ]
+}

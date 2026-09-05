@@ -1,0 +1,14 @@
+{
+    "fumbles" : [
+        "Next attack get -20. If it's a Magical attack, player spellward +20 instead",
+        "Enemy <i>Stunned</i> for next round",
+        "Enemy <i>Restrained</i> for next D4 rounds",
+        "Player get <b>Advantage</b> for the next <b>2</b> Rounds",
+        "Player is <i>Concealed</i> for D4 rounds (or until they make an attack)",
+        "Creature trip and waste action. <i>Prone</i> and need to use next turn to get up",
+        "Creature trips and slams its head. <i>Probe</i> and <i>Strunned(2)</i>",
+        "Creature is <i>Frightened(20)</i>",
+        "Creature strikes itself, D6 Slashing Damage",
+        "Creature <i>Prone</i> and receive 2D6 Bludgeoning Damage. Must use next turn to get back up"
+    ]
+}
